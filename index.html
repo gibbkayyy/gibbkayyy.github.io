@@ -10,6 +10,8 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
+html { scroll-behavior:smooth; }
+
 body {
   font-family: Inter, sans-serif;
   background:black;
@@ -17,7 +19,7 @@ body {
   overflow-x:hidden;
 }
 
-/* 🔥 FULLSCREEN BACKGROUND FIX */
+/* 🔥 BACKGROUND VIDEO (MP4) */
 .bg-video {
   position:fixed;
   top:0;
@@ -28,17 +30,15 @@ body {
   z-index:-3;
 }
 
-.bg-video iframe {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%) scale(1.6);
-  width:100vw;
-  height:100vh;
-  pointer-events:none;
+.bg-video video {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.15);
+  filter:brightness(0.35) contrast(1.2);
 }
 
-/* DARK OVERLAY */
+/* 🌌 OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
@@ -47,18 +47,19 @@ body {
   z-index:-2;
 }
 
-/* 🌐 GRID / BOX EFFECT (the “cool boxes” you liked) */
+/* 🌐 NEON GRID BOXES */
 .grid {
   position:fixed;
   width:100%;
   height:100%;
   background-image:
-    linear-gradient(rgba(0,255,136,0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.08) 1px, transparent 1px);
+    linear-gradient(rgba(0,255,136,0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.22) 1px, transparent 1px);
   background-size:70px 70px;
+  opacity:0.85;
   z-index:-1;
-  animation: moveGrid 25s linear infinite;
-  opacity:0.6;
+  animation: moveGrid 18s linear infinite;
+  mix-blend-mode: screen;
 }
 
 @keyframes moveGrid {
@@ -106,25 +107,12 @@ body {
   color:#00ff88;
   text-decoration:none;
   transition:0.3s;
+  font-weight:500;
 }
 
 .links a:hover {
   background:#00ff88;
   color:black;
-}
-
-/* STATUS */
-.status {
-  position:fixed;
-  top:10px;
-  left:10px;
-  padding:8px 12px;
-  border:1px solid rgba(0,255,136,0.4);
-  background:rgba(0,0,0,0.4);
-  color:#00ff88;
-  font-size:0.8rem;
-  backdrop-filter:blur(10px);
-  z-index:999;
 }
 
 /* ABOUT */
@@ -141,6 +129,19 @@ body {
   border:1px solid rgba(0,255,136,0.15);
   padding:30px;
   border-radius:12px;
+  backdrop-filter:blur(10px);
+}
+
+.about-box h3 {
+  color:#00ff88;
+  font-family:"Bebas Neue";
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+.about-box p {
+  opacity:0.8;
+  line-height:1.6;
 }
 
 /* EDITS */
@@ -161,6 +162,7 @@ h2 {
   margin-bottom:30px;
 }
 
+/* GRID */
 .gridCards {
   display:grid;
   grid-template-columns:1fr;
@@ -174,7 +176,6 @@ h2 {
   border:1px solid rgba(0,255,136,0.2);
   overflow:hidden;
   border-radius:10px;
-  cursor:pointer;
   transition:0.3s;
 }
 
@@ -200,18 +201,15 @@ iframe {
 
 <body>
 
-<!-- 🔥 FULLSCREEN BACKGROUND -->
+<!-- 🔥 BACKGROUND VIDEO -->
 <div class="bg-video">
-  <iframe
-    src="https://www.youtube.com/embed/8gcRTMr-rlg?autoplay=1&mute=1&loop=1&playlist=8gcRTMr-rlg&controls=0&modestbranding=1&playsinline=1"
-    allow="autoplay">
-  </iframe>
+  <video autoplay muted loop playsinline>
+    <source src="avengers.mp4" type="video/mp4">
+  </video>
 </div>
 
 <div class="overlay"></div>
 <div class="grid"></div>
-
-<div class="status"></div>
 
 <!-- HERO -->
 <div class="hero">
@@ -228,20 +226,26 @@ iframe {
 <!-- ABOUT -->
 <div class="about">
   <div class="about-box">
-Join the Discord server to get exclusive behind the scene updates on edits!
+    <h3>About</h3>
+    <p>
+      Cinematic edit hub showcasing high-impact visuals.
+      Join Discord for exclusive updates, early previews, and behind-the-scenes content.
+    </p>
   </div>
 </div>
 
 <!-- EDITS -->
 <section>
   <h2>Featured Edits</h2>
-  <div class="subtext">Click to watch fullscreen</div>
+  <div class="subtext">Click to watch your edits</div>
 
   <div class="gridCards">
+
     <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
+
   </div>
 </section>
 
