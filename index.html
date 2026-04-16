@@ -10,8 +10,6 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 
-html { scroll-behavior:smooth; }
-
 body {
   font-family: Inter, sans-serif;
   background:black;
@@ -19,18 +17,28 @@ body {
   overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* 🔥 FULLSCREEN BACKGROUND FIX */
 .bg-video {
   position:fixed;
   top:0;
   left:0;
-  width:100%;
-  height:100%;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
   z-index:-3;
-  pointer-events:none;
-  opacity:0.25;
 }
 
+.bg-video iframe {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%) scale(1.6);
+  width:100vw;
+  height:100vh;
+  pointer-events:none;
+}
+
+/* DARK OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
@@ -39,15 +47,23 @@ body {
   z-index:-2;
 }
 
+/* 🌐 GRID / BOX EFFECT (the “cool boxes” you liked) */
 .grid {
   position:fixed;
   width:100%;
   height:100%;
   background-image:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size:60px 60px;
+    linear-gradient(rgba(0,255,136,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.08) 1px, transparent 1px);
+  background-size:70px 70px;
   z-index:-1;
+  animation: moveGrid 25s linear infinite;
+  opacity:0.6;
+}
+
+@keyframes moveGrid {
+  from { transform:translateY(0); }
+  to { transform:translateY(-70px); }
 }
 
 /* HERO */
@@ -70,12 +86,12 @@ body {
 }
 
 .tagline {
-  opacity:0.8;
+  opacity:0.85;
   margin-top:10px;
   letter-spacing:2px;
 }
 
-/* BUTTONS */
+/* LINKS */
 .links {
   margin-top:35px;
   display:flex;
@@ -90,30 +106,11 @@ body {
   color:#00ff88;
   text-decoration:none;
   transition:0.3s;
-  font-size:0.9rem;
 }
 
 .links a:hover {
   background:#00ff88;
   color:black;
-}
-
-/* CTA */
-.cta {
-  max-width:700px;
-  margin-top:40px;
-  text-align:center;
-  padding:0 15px;
-  opacity:0.9;
-}
-
-.cta a {
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 26px;
-  border:1px solid #00ff88;
-  color:#00ff88;
-  text-decoration:none;
 }
 
 /* STATUS */
@@ -130,43 +127,40 @@ body {
   z-index:999;
 }
 
-/* STATS */
-.stats {
+/* ABOUT */
+.about {
   display:flex;
   justify-content:center;
-  gap:40px;
-  padding:50px 15px;
-  background:rgba(255,255,255,0.02);
-  flex-wrap:wrap;
+  padding:60px 20px;
+}
+
+.about-box {
+  max-width:700px;
   text-align:center;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(0,255,136,0.15);
+  padding:30px;
+  border-radius:12px;
 }
 
-.stats h3 {
-  color:#00ff88;
-  font-size:1.6rem;
-}
-
-/* SECTION */
+/* EDITS */
 section {
-  padding:90px 15px;
+  padding:100px 20px;
 }
 
 h2 {
   text-align:center;
   font-family:"Bebas Neue";
-  font-size:2.6rem;
+  font-size:3rem;
   color:#00ff88;
 }
 
 .subtext {
   text-align:center;
   opacity:0.7;
-  max-width:600px;
-  margin:0 auto 30px auto;
-  font-size:0.95rem;
+  margin-bottom:30px;
 }
 
-/* EDIT GRID (mobile friendly) */
 .gridCards {
   display:grid;
   grid-template-columns:1fr;
@@ -180,24 +174,25 @@ h2 {
   border:1px solid rgba(0,255,136,0.2);
   overflow:hidden;
   border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.03);
+  box-shadow:0 0 25px rgba(0,255,136,0.2);
 }
 
 iframe {
   width:100%;
-  height:220px;
+  height:230px;
   border:none;
 }
 
-/* DESKTOP IMPROVEMENTS */
-@media (min-width: 768px) {
-  .glitch { font-size:7rem; }
-
+/* DESKTOP */
+@media (min-width:768px) {
   .gridCards {
     grid-template-columns:repeat(2,1fr);
-  }
-
-  iframe {
-    height:260px;
   }
 }
 </style>
@@ -205,10 +200,10 @@ iframe {
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- 🔥 FULLSCREEN BACKGROUND -->
 <div class="bg-video">
   <iframe
-    src="https://www.youtube.com/embed/8gcRTMr-rlg?autoplay=1&mute=1&loop=1&playlist=8gcRTMr-rlg&controls=0"
+    src="https://www.youtube.com/embed/8gcRTMr-rlg?autoplay=1&mute=1&loop=1&playlist=8gcRTMr-rlg&controls=0&modestbranding=1&playsinline=1"
     allow="autoplay">
   </iframe>
 </div>
@@ -216,7 +211,6 @@ iframe {
 <div class="overlay"></div>
 <div class="grid"></div>
 
-<!-- STATUS -->
 <div class="status">Live • Gibbkayyy</div>
 
 <!-- HERO -->
@@ -229,46 +223,25 @@ iframe {
     <a href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok</a>
     <a href="https://discord.gg/uTmn7mRx" target="_blank">Discord</a>
   </div>
+</div>
 
-  <div class="cta">
-    <p>
-      Join the Discord server for exclusive updates, behind-the-scenes edits,
-      and early access drops.
-    </p>
-    <a href="https://discord.gg/uTmn7mRx" target="_blank">Join Discord</a>
+<!-- ABOUT -->
+<div class="about">
+  <div class="about-box">
+    Cinematic edit hub. Exclusive drops and updates in Discord.
   </div>
 </div>
 
-<!-- STATS -->
-<div class="stats">
-  <div><h3>Edits</h3><p>High impact</p></div>
-  <div><h3>Style</h3><p>Cinematic sync</p></div>
-  <div><h3>Focus</h3><p>Visual storytelling</p></div>
-</div>
-
-<!-- FEATURED -->
+<!-- EDITS -->
 <section>
   <h2>Featured Edits</h2>
-  <div class="subtext">Watch my latest cinematic edits.</div>
+  <div class="subtext">Click to watch fullscreen</div>
 
   <div class="gridCards">
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe>
-    </div>
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe>
-    </div>
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe>
-    </div>
-
-    <div class="card">
-      <iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe>
-    </div>
-
+    <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
+    <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
+    <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
+    <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
   </div>
 </section>
 
