@@ -5,6 +5,9 @@
 <title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- 🖼️ FAVICON -->
+<link rel="icon" type="image/png" href="favicon.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -17,6 +20,13 @@ body {
   background:black;
   color:white;
   overflow-x:hidden;
+}
+
+/* 🚫 LOCK SCROLL DURING LOADING */
+body.loading {
+  overflow:hidden;
+  height:100vh;
+  pointer-events:none;
 }
 
 /* 🔥 LOADER */
@@ -34,6 +44,7 @@ body {
   z-index:99999;
   text-align:center;
   padding:20px;
+  pointer-events:all;
 }
 
 .spinner {
@@ -65,7 +76,6 @@ body {
   100% { opacity:0.4; }
 }
 
-/* NEW NOTE UNDER LOADER */
 .loadnote {
   margin-top:10px;
   font-size:0.85rem;
@@ -75,7 +85,7 @@ body {
   color:white;
 }
 
-/* 🔥 BACKGROUND VIDEO */
+/* 🎬 BACKGROUND VIDEO */
 .bg-video {
   position:fixed;
   top:0;
@@ -103,7 +113,7 @@ body {
   z-index:-2;
 }
 
-/* 🌐 NEON GRID BOXES */
+/* 🌐 GRID */
 .grid {
   position:fixed;
   width:100%;
@@ -248,6 +258,16 @@ iframe {
   border:none;
 }
 
+/* FOOTER */
+.footer {
+  text-align:center;
+  padding:30px 10px;
+  font-size:0.8rem;
+  opacity:0.6;
+  border-top:1px solid rgba(0,255,136,0.15);
+  margin-top:60px;
+}
+
 /* DESKTOP */
 @media (min-width:768px) {
   .gridCards {
@@ -257,16 +277,16 @@ iframe {
 </style>
 </head>
 
-<body>
+<body class="loading">
 
-<!-- 🔥 LOADING SCREEN -->
+<!-- 🔥 LOADER -->
 <div class="loader" id="loader">
   <div class="spinner"></div>
   <div class="loadtext">Loading</div>
   <div class="loadnote">It may take a while for everything to load</div>
 </div>
 
-<!-- BACKGROUND -->
+<!-- 🎬 BACKGROUND -->
 <div class="bg-video">
   <video autoplay muted loop playsinline>
     <source src="avengers.mp4" type="video/mp4">
@@ -292,9 +312,7 @@ iframe {
 <div class="about">
   <div class="about-box">
     <h3>About</h3>
-    <p>
-      Join the Discord server for exclusive behind the scene updates!
-    </p>
+    <p>Join the Discord server for exclusive behind the scene updates!</p>
   </div>
 </div>
 
@@ -304,24 +322,29 @@ iframe {
   <div class="subtext">Click to watch the edits</div>
 
   <div class="gridCards">
-
     <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
     <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
-
   </div>
 </section>
 
-<!-- LOADER SCRIPT -->
+<!-- FOOTER -->
+<footer class="footer">
+  © 2026 Gibbkayyy. All rights reserved.
+</footer>
+
+<!-- SCRIPT -->
 <script>
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
+
   loader.style.opacity = "0";
   loader.style.transition = "0.6s ease";
 
   setTimeout(() => {
     loader.style.display = "none";
+    document.body.classList.remove("loading");
   }, 600);
 });
 </script>
