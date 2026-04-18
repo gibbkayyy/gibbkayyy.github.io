@@ -2,301 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="icon" type="image/png" href="favicon.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<title>gibbkayyy</title>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-
 body {
-  font-family: Inter, sans-serif;
-  background:black;
-  color:white;
-  overflow-x:hidden;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1f14;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
 }
 
-/* LOCK */
-body.loading {
-  overflow:hidden;
-  height:100vh;
-  pointer-events:none;
+/* 🌟 floating background boxes */
+.bg-box {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #00ff88;
+    opacity: 0.08;
+    animation: float 14s infinite linear;
 }
 
-/* LOADER */
-.loader {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:99999;
+@keyframes float {
+    from { transform: translateY(110vh) rotate(0deg); }
+    to { transform: translateY(-10vh) rotate(360deg); }
 }
 
-.spinner {
-  width:60px;
-  height:60px;
-  border:4px solid rgba(0,255,136,0.2);
-  border-top:4px solid #00ff88;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
+/* ✨ glowing title */
+.title {
+    font-size: 3rem;
+    margin-top: 80px;
+    color: #00ff88;
+    text-shadow:
+        0 0 10px #00ff88,
+        0 0 20px #00ff88,
+        0 0 40px #00ff88;
+    animation: glowPulse 2s infinite alternate;
 }
 
-@keyframes spin {
-  to { transform:rotate(360deg); }
+@keyframes glowPulse {
+    from { text-shadow: 0 0 10px #00ff88; }
+    to { text-shadow: 0 0 45px #00ff88; }
 }
 
-.loadtext {
-  margin-top:20px;
-  color:#00ff88;
-}
-
-.loadnote {
-  margin-top:10px;
-  font-size:0.85rem;
-  opacity:0.6;
-}
-
-/* BACKGROUND */
-.bg-video {
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:-3;
-}
-
-.bg-video video {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.35);
-}
-
-.overlay {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
-  z-index:-2;
-}
-
-.grid {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background-image:
-    linear-gradient(rgba(0,255,136,0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.18) 1px, transparent 1px);
-  background-size:70px 70px;
-  z-index:-1;
-}
-
-/* HERO */
-.hero {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
-
-.glitch {
-  font-family:"Bebas Neue";
-  font-size:6rem;
-  color:#00ff88;
-  letter-spacing:6px;
-  text-shadow:
-    0 0 10px #00ff88,
-    0 0 20px #00ff88,
-    0 0 40px #00ff88;
-}
-
-/* LINKS */
+/* 🔗 buttons */
 .links {
-  margin-top:30px;
-  display:flex;
-  gap:12px;
+    margin-top: 30px;
 }
 
-.links a {
-  padding:12px 20px;
-  border:1px solid #00ff88;
-  color:#00ff88;
-  text-decoration:none;
-  transition:0.3s;
+.btn {
+    display: inline-block;
+    padding: 14px 24px;
+    margin: 10px;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
 }
 
-.links a:hover {
-  background:#00ff88;
-  color:black;
+.btn:hover {
+    background: #00ff88;
+    color: black;
+    box-shadow: 0 0 25px #00ff88;
 }
 
-/* STATS */
+/* ➕ moving plus animation */
+.btn::after {
+    content: "+";
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    animation: plusMove 1.2s infinite alternate;
+}
+
+@keyframes plusMove {
+    from { right: 10px; opacity: 0.3; }
+    to { right: 16px; opacity: 1; }
+}
+
+/* 📊 stats */
 .stats {
-  display:flex;
-  justify-content:center;
-  gap:25px;
-  flex-wrap:wrap;
-  padding:60px 20px;
+    margin-top: 120px;
+    font-size: 1.5rem;
 }
 
 .stat {
-  text-align:center;
-  border:1px solid rgba(0,255,136,0.2);
-  padding:20px;
-  border-radius:10px;
-  transition:0.3s;
+    margin: 16px;
+    font-weight: bold;
+    animation: floatText 3s ease-in-out infinite;
 }
 
-.stat:hover {
-  box-shadow:0 0 15px rgba(0,255,136,0.3);
-}
-
-.stat h3 {
-  color:#00ff88;
-  font-size:2rem;
-  animation:pulseGlow 2s infinite;
-}
-
-@keyframes pulseGlow {
-  0% { text-shadow:0 0 5px #00ff88; }
-  50% { text-shadow:0 0 20px #00ff88; }
-  100% { text-shadow:0 0 5px #00ff88; }
-}
-
-.stat p {
-  opacity:0.7;
-}
-
-/* EDITS */
-.gridCards {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
-  max-width:900px;
-  margin:auto;
-  padding:40px;
-}
-
-.card iframe {
-  width:100%;
-  height:230px;
-}
-
-/* FOOTER */
-.footer {
-  text-align:center;
-  padding:30px;
-  opacity:0.6;
+@keyframes floatText {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 </style>
 </head>
 
-<body class="loading">
+<body>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="spinner"></div>
-  <div class="loadtext">Loading</div>
-  <div class="loadnote">It may take a while for everything to load</div>
+<!-- background boxes -->
+<script>
+for (let i = 0; i < 25; i++) {
+    let box = document.createElement("div");
+    box.className = "bg-box";
+    box.style.left = Math.random() * 100 + "vw";
+    box.style.animationDuration = (10 + Math.random() * 10) + "s";
+    document.body.appendChild(box);
+}
+</script>
+
+<h1 class="title">gibbkayyy</h1>
+
+<div class="links">
+    <a class="btn" href="https://youtube.com">YouTube</a>
+    <a class="btn" href="https://tiktok.com">TikTok</a>
 </div>
 
-<!-- BG -->
-<div class="bg-video">
-  <video autoplay muted loop>
-    <source src="avengers.mp4" type="video/mp4">
-  </video>
+<div class="stats" id="statsSection">
+    <div class="stat">Subscribers: <span id="subs">0</span>+</div>
+    <div class="stat">Total Views: <span id="views">0</span>+</div>
+    <div class="stat">Edits: <span id="edits">0</span>+</div>
+    <div class="stat">TikTok Followers: <span id="ttfollowers">0</span>+</div>
+    <div class="stat">TikTok Likes: <span id="ttlikes">0</span>+</div>
 </div>
-
-<div class="overlay"></div>
-<div class="grid"></div>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="glitch">GIBBKAYYY</div>
-
-  <div class="links">
-    <a href="https://www.youtube.com/@gibbkayyy" target="_blank">YouTube</a>
-    <a href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok</a>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat">
-    <h3 data-target="400">0</h3>
-    <p>YouTube Subs+</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="140000">0</h3>
-    <p>Total Views+</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="50">0</h3>
-    <p>Edits+</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="1000">0</h3>
-    <p>TikTok Followers+</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="10300">0</h3>
-    <p>TikTok Likes+</p>
-  </div>
-</div>
-
-<!-- EDITS -->
-<div class="gridCards">
-  <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
-</div>
-
-<footer class="footer">
-  © 2026 Gibbkayyy. All rights reserved.
-</footer>
 
 <script>
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
+// 🔢 count up
+function countUp(id, target, speed) {
+    let el = document.getElementById(id);
+    let count = 0;
+    let inc = target / speed;
 
-  loader.style.opacity = "0";
-
-  setTimeout(() => {
-    loader.style.display = "none";
-    document.body.classList.remove("loading");
-    startCounter();
-  }, 600);
-});
-
-function startCounter() {
-  const counters = document.querySelectorAll("[data-target]");
-
-  counters.forEach(counter => {
-    const update = () => {
-      const target = +counter.getAttribute("data-target");
-      const current = +counter.innerText;
-      const increment = target / 100;
-
-      if (current < target) {
-        counter.innerText = Math.ceil(current + increment);
-        setTimeout(update, 20);
-      } else {
-        counter.innerText = target + "+";
-      }
-    };
-
-    update();
-  });
+    let interval = setInterval(() => {
+        count += inc;
+        if (count >= target) {
+            count = target;
+            clearInterval(interval);
+        }
+        el.innerText = Math.floor(count).toLocaleString();
+    }, 20);
 }
+
+// 👀 scroll trigger (only once)
+let triggered = false;
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !triggered) {
+            triggered = true;
+
+            countUp("subs", 400, 100);
+            countUp("views", 140000, 150);
+            countUp("edits", 50, 80);
+            countUp("ttfollowers", 1000, 120);
+            countUp("ttlikes", 10300, 140);
+        }
+    });
+}, { threshold: 0.4 });
+
+observer.observe(document.getElementById("statsSection"));
 </script>
 
 </body>
