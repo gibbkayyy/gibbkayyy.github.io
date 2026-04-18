@@ -5,15 +5,12 @@
 <title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 🖼️ FAVICON -->
 <link rel="icon" type="image/png" href="favicon.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-
-html { scroll-behavior:smooth; }
 
 body {
   font-family: Inter, sans-serif;
@@ -22,18 +19,15 @@ body {
   overflow-x:hidden;
 }
 
-/* 🚫 LOCK SCROLL DURING LOADING */
 body.loading {
   overflow:hidden;
   height:100vh;
   pointer-events:none;
 }
 
-/* 🔥 LOADER */
+/* LOADER */
 .loader {
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
   background:black;
@@ -42,9 +36,6 @@ body.loading {
   justify-content:center;
   align-items:center;
   z-index:99999;
-  text-align:center;
-  padding:20px;
-  pointer-events:all;
 }
 
 .spinner {
@@ -54,45 +45,28 @@ body.loading {
   border-top:4px solid #00ff88;
   border-radius:50%;
   animation:spin 1s linear infinite;
-  box-shadow:0 0 20px rgba(0,255,136,0.3);
 }
 
 @keyframes spin {
-  from { transform:rotate(0deg); }
   to { transform:rotate(360deg); }
 }
 
 .loadtext {
   margin-top:20px;
-  font-size:1.2rem;
-  letter-spacing:3px;
   color:#00ff88;
-  animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity:0.4; }
-  50% { opacity:1; }
-  100% { opacity:0.4; }
 }
 
 .loadnote {
   margin-top:10px;
   font-size:0.85rem;
   opacity:0.6;
-  max-width:300px;
-  line-height:1.4;
-  color:white;
 }
 
-/* 🎬 BACKGROUND VIDEO */
+/* BACKGROUND */
 .bg-video {
   position:fixed;
-  top:0;
-  left:0;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
+  width:100%;
+  height:100%;
   z-index:-3;
 }
 
@@ -100,20 +74,17 @@ body.loading {
   width:100%;
   height:100%;
   object-fit:cover;
-  transform:scale(1.15);
-  filter:brightness(0.35) contrast(1.2);
+  filter:brightness(0.35);
 }
 
-/* 🌌 OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
   height:100%;
-  background:radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
+  background:radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
   z-index:-2;
 }
 
-/* 🌐 GRID */
 .grid {
   position:fixed;
   width:100%;
@@ -122,16 +93,7 @@ body.loading {
     linear-gradient(rgba(0,255,136,0.18) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,255,136,0.18) 1px, transparent 1px);
   background-size:70px 70px;
-  opacity:0.8;
   z-index:-1;
-  animation: moveGrid 18s linear infinite;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 6px rgba(0,255,136,0.2));
-}
-
-@keyframes moveGrid {
-  from { transform:translateY(0); }
-  to { transform:translateY(-70px); }
 }
 
 /* HERO */
@@ -142,153 +104,77 @@ body.loading {
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding:20px;
 }
 
 .glitch {
   font-family:"Bebas Neue";
   font-size:6rem;
   color:#00ff88;
-  letter-spacing:6px;
-  text-shadow:0 0 30px #00ff88;
 }
 
 .tagline {
-  opacity:0.85;
-  margin-top:10px;
-  letter-spacing:2px;
+  opacity:0.8;
 }
 
-/* LINKS */
-.links {
-  margin-top:35px;
+/* STATS */
+.stats {
   display:flex;
-  gap:12px;
+  justify-content:center;
+  gap:30px;
   flex-wrap:wrap;
-  justify-content:center;
-}
-
-.links a {
-  padding:12px 20px;
-  border:1px solid #00ff88;
-  color:#00ff88;
-  text-decoration:none;
-  transition:0.3s;
-  font-weight:500;
-}
-
-.links a:hover {
-  background:#00ff88;
-  color:black;
-}
-
-/* ABOUT */
-.about {
-  display:flex;
-  justify-content:center;
   padding:60px 20px;
 }
 
-.about-box {
-  max-width:700px;
+.stat {
   text-align:center;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(0,255,136,0.15);
-  padding:30px;
-  border-radius:12px;
-  backdrop-filter:blur(10px);
+  border:1px solid rgba(0,255,136,0.2);
+  padding:20px;
+  border-radius:10px;
 }
 
-.about-box h3 {
+.stat h3 {
   color:#00ff88;
-  font-family:"Bebas Neue";
   font-size:2rem;
-  margin-bottom:10px;
 }
 
-.about-box p {
-  opacity:0.8;
-  line-height:1.6;
+.stat p {
+  opacity:0.7;
 }
 
 /* EDITS */
-section {
-  padding:100px 20px;
-}
-
-h2 {
-  text-align:center;
-  font-family:"Bebas Neue";
-  font-size:3rem;
-  color:#00ff88;
-}
-
-.subtext {
-  text-align:center;
-  opacity:0.7;
-  margin-bottom:30px;
-}
-
-/* GRID */
 .gridCards {
   display:grid;
   grid-template-columns:1fr;
   gap:18px;
   max-width:900px;
   margin:auto;
+  padding:40px;
 }
 
-.card {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(0,255,136,0.25);
-  overflow:hidden;
-  border-radius:10px;
-  transition:0.3s;
-}
-
-.card:hover {
-  transform:scale(1.03);
-  box-shadow:0 0 18px rgba(0,255,136,0.25);
-  border-color:rgba(0,255,136,0.6);
-}
-
-iframe {
+.card iframe {
   width:100%;
   height:230px;
-  border:none;
 }
 
 /* FOOTER */
 .footer {
   text-align:center;
-  padding:30px 10px;
-  font-size:0.8rem;
+  padding:30px;
   opacity:0.6;
-  border-top:1px solid rgba(0,255,136,0.15);
-  margin-top:60px;
-}
-
-/* DESKTOP */
-@media (min-width:768px) {
-  .gridCards {
-    grid-template-columns:repeat(2,1fr);
-  }
 }
 </style>
 </head>
 
 <body class="loading">
 
-<!-- 🔥 LOADER -->
 <div class="loader" id="loader">
   <div class="spinner"></div>
   <div class="loadtext">Loading</div>
   <div class="loadnote">It may take a while for everything to load</div>
 </div>
 
-<!-- 🎬 BACKGROUND -->
 <div class="bg-video">
-  <video autoplay muted loop playsinline>
+  <video autoplay muted loop>
     <source src="avengers.mp4" type="video/mp4">
   </video>
 </div>
@@ -296,56 +182,84 @@ iframe {
 <div class="overlay"></div>
 <div class="grid"></div>
 
-<!-- HERO -->
 <div class="hero">
   <div class="glitch">GIBBKAYYY</div>
   <div class="tagline">Made To Be Watched</div>
-
-  <div class="links">
-    <a href="https://www.youtube.com/@gibbkayyy" target="_blank">YouTube</a>
-    <a href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok</a>
-  </div>
 </div>
 
-<!-- ABOUT -->
-<div class="about">
-  <div class="about-box">
-    <h3>About</h3>
-    <p>More updates to the site soon!</p>
+<!-- 🔥 STATS SECTION -->
+<div class="stats">
+  <div class="stat">
+    <h3 data-target="400">0</h3>
+    <p>YouTube Subs</p>
+  </div>
+  <div class="stat">
+    <h3 data-target="140000">0</h3>
+    <p>Total Views</p>
+  </div>
+  <div class="stat">
+    <h3 data-target="50">0</h3>
+    <p>Edits</p>
+  </div>
+  <div class="stat">
+    <h3 data-target="1000">0</h3>
+    <p>TikTok Followers</p>
+  </div>
+  <div class="stat">
+    <h3 data-target="10300">0</h3>
+    <p>TikTok Likes</p>
   </div>
 </div>
 
 <!-- EDITS -->
-<section>
-  <h2>Featured Edits</h2>
-  <div class="subtext">Click to watch the edits</div>
+<div class="gridCards">
+  <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
+  <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
+  <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
+  <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
+</div>
 
-  <div class="gridCards">
-    <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
-    <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
-    <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
-    <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer class="footer">
   © 2026 Gibbkayyy. All rights reserved.
 </footer>
 
-<!-- SCRIPT -->
 <script>
+// loader unlock
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
 
   loader.style.opacity = "0";
-  loader.style.transition = "0.6s ease";
 
   setTimeout(() => {
     loader.style.display = "none";
     document.body.classList.remove("loading");
+
+    startCounter(); // start stats AFTER load
   }, 600);
 });
+
+// count up animation
+function startCounter() {
+  const counters = document.querySelectorAll("[data-target]");
+
+  counters.forEach(counter => {
+    const update = () => {
+      const target = +counter.getAttribute("data-target");
+      const current = +counter.innerText;
+
+      const increment = target / 100;
+
+      if (current < target) {
+        counter.innerText = Math.ceil(current + increment);
+        setTimeout(update, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+
+    update();
+  });
+}
 </script>
 
 </body>
