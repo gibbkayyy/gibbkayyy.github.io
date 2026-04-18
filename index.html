@@ -106,14 +106,60 @@ body.loading {
   text-align:center;
 }
 
+/* ✨ GLITCH TITLE (NOW FLOATS) */
 .glitch {
   font-family:"Bebas Neue";
   font-size:6rem;
   color:#00ff88;
+  animation: floatTitle 4s ease-in-out infinite;
+}
+
+@keyframes floatTitle {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
 }
 
 .tagline {
   opacity:0.8;
+}
+
+/* 🔗 BUTTONS (NEW) */
+.links {
+  margin-top:20px;
+}
+
+.btn {
+  display:inline-block;
+  padding:12px 22px;
+  margin:8px;
+  border:1px solid #00ff88;
+  color:#00ff88;
+  text-decoration:none;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.btn:hover {
+  box-shadow:0 0 20px #00ff88;
+  background:#00ff88;
+  color:black;
+}
+
+/* ABOUT SECTION */
+.about {
+  max-width:700px;
+  margin:60px auto;
+  padding:20px;
+  text-align:center;
+  border:1px solid rgba(0,255,136,0.2);
+  border-radius:12px;
+  transition:0.3s;
+}
+
+.about:hover {
+  box-shadow:0 0 25px #00ff88;
+  transform:scale(1.02);
 }
 
 /* STATS */
@@ -130,6 +176,12 @@ body.loading {
   border:1px solid rgba(0,255,136,0.2);
   padding:20px;
   border-radius:10px;
+  transition:0.3s;
+}
+
+.stat:hover {
+  box-shadow:0 0 25px #00ff88;
+  transform:translateY(-5px);
 }
 
 .stat h3 {
@@ -149,6 +201,15 @@ body.loading {
   max-width:900px;
   margin:auto;
   padding:40px;
+}
+
+.card {
+  transition:0.3s;
+}
+
+.card:hover {
+  box-shadow:0 0 25px #00ff88;
+  transform:scale(1.02);
 }
 
 .card iframe {
@@ -185,9 +246,21 @@ body.loading {
 <div class="hero">
   <div class="glitch">GIBBKAYYY</div>
   <div class="tagline">Made To Be Watched</div>
+
+  <!-- 🔗 BUTTONS -->
+  <div class="links">
+    <a class="btn" href="https://youtube.com">YouTube</a>
+    <a class="btn" href="https://tiktok.com">TikTok</a>
+  </div>
 </div>
 
-<!-- 🔥 STATS SECTION -->
+<!-- 📌 ABOUT SECTION -->
+<div class="about">
+  <h2>About Me</h2>
+  <p>I create cinematic edits, fast-paced content, and viral-style videos built for attention.</p>
+</div>
+
+<!-- 🔥 STATS -->
 <div class="stats">
   <div class="stat">
     <h3 data-target="400">0</h3>
@@ -224,7 +297,6 @@ body.loading {
 </footer>
 
 <script>
-// loader unlock (UNCHANGED)
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
 
@@ -234,13 +306,12 @@ window.addEventListener("load", () => {
     loader.style.display = "none";
     document.body.classList.remove("loading");
 
-    initScrollCounter(); // 🔥 ONLY CHANGE
+    initScrollCounter();
   }, 600);
 });
 
 let started = false;
 
-// 👀 NEW: scroll trigger added ONLY for stats
 function initScrollCounter() {
   const stats = document.querySelector(".stats");
 
@@ -251,14 +322,11 @@ function initScrollCounter() {
         startCounter();
       }
     });
-  }, {
-    threshold: 0.4
-  });
+  }, { threshold: 0.4 });
 
   observer.observe(stats);
 }
 
-// 🔢 ORIGINAL counter (UNCHANGED)
 function startCounter() {
   const counters = document.querySelectorAll("[data-target]");
 
@@ -266,7 +334,6 @@ function startCounter() {
     const update = () => {
       const target = +counter.getAttribute("data-target");
       const current = +counter.innerText;
-
       const increment = target / 100;
 
       if (current < target) {
