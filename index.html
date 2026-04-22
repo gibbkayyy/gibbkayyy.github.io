@@ -5,7 +5,6 @@
 <title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 🟢 FAVICON -->
 <link rel="icon" type="image/png" href="favicon.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,7 +19,7 @@ body {
   background:#000;
 }
 
-/* 🌟 INTRO */
+/* 🌟 IMPROVED INTRO */
 .intro {
   position:fixed;
   inset:0;
@@ -29,48 +28,77 @@ body {
   justify-content:center;
   align-items:center;
   z-index:9999;
+
   animation: introFade 1.6s ease forwards;
-  animation-delay:1.1s;
+  animation-delay:1.2s;
 }
 
 .intro h1 {
   font-family:"Bebas Neue";
   font-size:5rem;
   color:#00ff88;
-  text-shadow:0 0 35px #00ff88;
-  animation: introPop 1s cubic-bezier(.2,.9,.2,1);
+  text-shadow:0 0 40px #00ff88;
+
+  animation: introPop 1.1s cubic-bezier(.2,.9,.2,1);
 }
 
 @keyframes introPop {
-  0% { transform:scale(0.7); opacity:0; filter:blur(10px); }
-  100% { transform:scale(1); opacity:1; filter:blur(0); }
+  0% {
+    transform: scale(0.7);
+    opacity:0;
+    filter: blur(12px);
+  }
+  100% {
+    transform: scale(1);
+    opacity:1;
+    filter: blur(0);
+  }
 }
 
 @keyframes introFade {
-  to { opacity:0; visibility:hidden; }
+  to {
+    opacity:0;
+    visibility:hidden;
+  }
 }
 
-/* 🌌 BACKGROUND BOXES */
+/* 🟩 CLEAN CONNECTED GRID BACKGROUND */
 .bg {
   position:fixed;
   inset:0;
   z-index:-1;
-  pointer-events:none;
 }
 
-.box {
+.bg::before {
+  content:"";
   position:absolute;
-  width:60px;
-  height:60px;
-  border:2px solid #00ff88;
-  box-shadow:0 0 15px #00ff88;
-  opacity:0.6;
-  animation: float 14s linear infinite;
+  inset:0;
+
+  background-image:
+    linear-gradient(rgba(0,255,136,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.08) 1px, transparent 1px);
+
+  background-size:60px 60px;
+
+  animation: gridMove 14s linear infinite;
 }
 
-@keyframes float {
-  from { transform: translateY(110vh) rotate(0deg); }
-  to { transform: translateY(-10vh) rotate(360deg); }
+.bg::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at center, rgba(0,255,136,0.12), transparent 60%);
+  animation: pulse 6s ease-in-out infinite;
+}
+
+@keyframes gridMove {
+  from { transform: translate(0,0); }
+  to { transform: translate(60px,60px); }
+}
+
+@keyframes pulse {
+  0%,100% { opacity:0.4; }
+  50% { opacity:0.8; }
 }
 
 /* HERO */
@@ -203,6 +231,7 @@ body {
   color:#00ff88;
   text-decoration:none;
   border-radius:8px;
+  transition:0.25s;
 }
 
 .download:hover {
@@ -228,7 +257,7 @@ footer {
 </div>
 
 <!-- BACKGROUND -->
-<div class="bg" id="bg"></div>
+<div class="bg"></div>
 
 <!-- HERO -->
 <div class="hero">
@@ -244,7 +273,7 @@ footer {
 <!-- ABOUT -->
 <div class="about">
   <h2>About Me</h2>
-  <p>I create cinematic edits built for attention, energy, and impact.</p>
+  <p>I create cinematic edits built for energy, impact, and style.</p>
 </div>
 
 <!-- STATS -->
@@ -276,48 +305,42 @@ footer {
 </footer>
 
 <script>
-// floating boxes
-const bg = document.getElementById("bg");
 
-for (let i = 0; i < 30; i++) {
-  const d = document.createElement("div");
-  d.className = "box";
-  d.style.left = Math.random()*100 + "vw";
-  d.style.animationDuration = (8 + Math.random()*10) + "s";
-  bg.appendChild(d);
-}
-
-// stats (once only + K formatting)
+/* 📊 FIXED STATS (SMOOTH + ONCE ONLY) */
 let ran = false;
 
-const obs = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting && !ran) {
       ran = true;
 
       document.querySelectorAll("[data-target]").forEach(el => {
         let target = +el.dataset.target;
-        let count = 0;
-        let step = target / 90;
+        let current = 0;
 
-        let interval = setInterval(() => {
-          count += step;
+        let step = target / 80;
 
-          if (count >= target) {
-            if (target === 1000) el.innerText = "1K+";
-            else el.innerText = target + "+";
-            clearInterval(interval);
+        let timer = setInterval(() => {
+          current += step;
+
+          if (current >= target) {
+            el.innerText = target === 1000 ? "1K+" : target + "+";
+            clearInterval(timer);
           } else {
-            if (target === 1000) el.innerText = Math.floor(count/1000) + "K+";
-            else el.innerText = Math.floor(count) + "+";
+            if (target === 1000) {
+              el.innerText = Math.floor(current/1000) + "K+";
+            } else {
+              el.innerText = Math.floor(current) + "+";
+            }
           }
-        }, 18);
+        }, 20);
       });
     }
   });
 }, { threshold: 0.4 });
 
-obs.observe(document.querySelector(".stats"));
+observer.observe(document.querySelector(".stats"));
+
 </script>
 
 </body>
