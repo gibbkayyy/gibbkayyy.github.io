@@ -5,8 +5,6 @@
 <title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" type="image/png" href="favicon.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -14,86 +12,36 @@
 
 body {
   font-family: Inter, sans-serif;
-  background:black;
   color:white;
   overflow-x:hidden;
+
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,255,136,0.25), transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(0,255,136,0.15), transparent 45%),
+    #000;
 }
 
-body.loading {
-  overflow:hidden;
-  height:100vh;
+/* FLOATING BACKGROUND */
+.bg {
+  position:fixed;
+  inset:0;
+  z-index:-1;
   pointer-events:none;
 }
 
-/* LOADER */
-.loader {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:99999;
-}
-
-.spinner {
+.box {
+  position:absolute;
   width:60px;
   height:60px;
-  border:4px solid rgba(0,255,136,0.2);
-  border-top:4px solid #00ff88;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform:rotate(360deg); }
-}
-
-.loadtext {
-  margin-top:20px;
-  color:#00ff88;
-}
-
-.loadnote {
-  margin-top:10px;
-  font-size:0.85rem;
+  border:2px solid #00ff88;
+  box-shadow:0 0 15px #00ff88;
   opacity:0.6;
+  animation: float 12s linear infinite;
 }
 
-/* BACKGROUND */
-.bg-video {
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:-3;
-}
-
-.bg-video video {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.35);
-}
-
-.overlay {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:radial-gradient(circle, rgba(0,0,0,0.2), rgba(0,0,0,0.95));
-  z-index:-2;
-}
-
-.grid {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background-image:
-    linear-gradient(rgba(0,255,136,0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.18) 1px, transparent 1px);
-  background-size:70px 70px;
-  z-index:-1;
+@keyframes float {
+  from { transform: translateY(110vh) rotate(0deg); }
+  to { transform: translateY(-10vh) rotate(360deg); }
 }
 
 /* HERO */
@@ -106,81 +54,71 @@ body.loading {
   text-align:center;
 }
 
-/* ✨ GLITCH TITLE (NOW FLOATS) */
-.glitch {
+.title {
   font-family:"Bebas Neue";
   font-size:6rem;
   color:#00ff88;
-  animation: floatTitle 4s ease-in-out infinite;
+  text-shadow:0 0 25px #00ff88;
+  animation: glow 3s ease-in-out infinite;
 }
 
-@keyframes floatTitle {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-  100% { transform: translateY(0px); }
+@keyframes glow {
+  0%,100% { text-shadow:0 0 10px #00ff88; }
+  50% { text-shadow:0 0 40px #00ff88; }
 }
 
-.tagline {
-  opacity:0.8;
-}
+.tagline { opacity:0.8; }
 
-/* 🔗 BUTTONS (NEW) */
-.links {
-  margin-top:20px;
-}
+.links { margin-top:20px; }
 
 .btn {
   display:inline-block;
+  margin:10px;
   padding:12px 22px;
-  margin:8px;
   border:1px solid #00ff88;
   color:#00ff88;
   text-decoration:none;
   border-radius:8px;
-  transition:0.3s;
+  transition:0.25s;
 }
 
 .btn:hover {
-  box-shadow:0 0 20px #00ff88;
   background:#00ff88;
   color:black;
+  box-shadow:0 0 20px #00ff88;
+  transform:scale(1.05);
 }
 
-/* ABOUT SECTION */
+/* ABOUT */
 .about {
-  max-width:700px;
+  max-width:600px;
   margin:60px auto;
-  padding:20px;
   text-align:center;
   border:1px solid rgba(0,255,136,0.2);
+  padding:20px;
   border-radius:12px;
-  transition:0.3s;
-}
-
-.about:hover {
-  box-shadow:0 0 25px #00ff88;
-  transform:scale(1.02);
 }
 
 /* STATS */
 .stats {
   display:flex;
   justify-content:center;
-  gap:30px;
   flex-wrap:wrap;
-  padding:60px 20px;
+  gap:25px;
+  padding:80px 20px;
 }
 
 .stat {
-  text-align:center;
   border:1px solid rgba(0,255,136,0.2);
   padding:20px;
   border-radius:10px;
-  transition:0.3s;
+  min-width:160px;
+  text-align:center;
+  transition:0.25s;
 }
 
 .stat:hover {
-  box-shadow:0 0 25px #00ff88;
+  box-shadow:0 0 25px rgba(0,255,136,0.3);
   transform:translateY(-5px);
 }
 
@@ -189,36 +127,60 @@ body.loading {
   font-size:2rem;
 }
 
-.stat p {
-  opacity:0.7;
+/* PACKS */
+.packs {
+  text-align:center;
+  padding:100px 20px;
 }
 
-/* EDITS */
-.gridCards {
-  display:grid;
-  grid-template-columns:1fr;
-  gap:18px;
-  max-width:900px;
+.packs h2 {
+  font-family:"Bebas Neue";
+  font-size:4rem;
+  color:#00ff88;
+  text-shadow:0 0 20px #00ff88;
+}
+
+.line {
+  width:120px;
+  height:2px;
+  background:#00ff88;
+  margin:20px auto;
+  box-shadow:0 0 15px #00ff88;
+}
+
+.pack-box {
+  max-width:500px;
   margin:auto;
   padding:40px;
+  border:1px solid rgba(0,255,136,0.2);
+  border-radius:15px;
+  transition:0.25s;
 }
 
-.card {
-  transition:0.3s;
+.pack-box:hover {
+  box-shadow:0 0 30px rgba(0,255,136,0.3);
+  transform:translateY(-8px);
 }
 
-.card:hover {
-  box-shadow:0 0 25px #00ff88;
-  transform:scale(1.02);
+/* DOWNLOAD BUTTON */
+.download {
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 26px;
+  border:1px solid #00ff88;
+  color:#00ff88;
+  text-decoration:none;
+  border-radius:8px;
+  transition:0.25s;
 }
 
-.card iframe {
-  width:100%;
-  height:230px;
+.download:hover {
+  background:#00ff88;
+  color:black;
+  box-shadow:0 0 20px #00ff88;
 }
 
-/* FOOTER */
-.footer {
+footer {
   text-align:center;
   padding:30px;
   opacity:0.6;
@@ -226,127 +188,62 @@ body.loading {
 </style>
 </head>
 
-<body class="loading">
+<body>
 
-<div class="loader" id="loader">
-  <div class="spinner"></div>
-  <div class="loadtext">Loading</div>
-  <div class="loadnote">It may take a while for everything to load</div>
-</div>
-
-<div class="bg-video">
-  <video autoplay muted loop>
-    <source src="avengers.mp4" type="video/mp4">
-  </video>
-</div>
-
-<div class="overlay"></div>
-<div class="grid"></div>
+<div class="bg" id="bg"></div>
 
 <div class="hero">
-  <div class="glitch">GIBBKAYYY</div>
+  <div class="title">GIBBKAYYY</div>
   <div class="tagline">Made To Be Watched</div>
 
-  <!-- 🔗 BUTTONS -->
   <div class="links">
-    <a class="btn" href="https://youtube.com">YouTube</a>
-    <a class="btn" href="https://tiktok.com">TikTok</a>
+    <a class="btn" href="#">YouTube</a>
+    <a class="btn" href="#">TikTok</a>
   </div>
 </div>
 
-<!-- 📌 ABOUT SECTION -->
 <div class="about">
-  <h2>News</h2>
-  <p>New edit on Youtube and Tiktok! (18.4.26)
-     Youtube and Tiktok stats on website!</p>
+  <h2>About Me</h2>
+  <p>I create cinematic edits built for attention, energy, and impact.</p>
 </div>
 
-<!-- 🔥 STATS -->
 <div class="stats">
-  <div class="stat">
-    <h3 data-target="400">0</h3>
-    <p>YouTube Subs</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="140000">0</h3>
-    <p>Total Views</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="50">0</h3>
-    <p>Edits</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="1000">0</h3>
-    <p>TikTok Followers</p>
-  </div>
-  <div class="stat">
-    <h3 data-target="10300">0</h3>
-    <p>TikTok Likes</p>
+  <div class="stat"><h3 data-target="400">0</h3><p>YouTube Subs</p></div>
+  <div class="stat"><h3 data-target="140000">0</h3><p>Total Views</p></div>
+  <div class="stat"><h3 data-target="50">0</h3><p>Edits</p></div>
+  <div class="stat"><h3 data-target="1000">0</h3><p>TikTok Followers</p></div>
+  <div class="stat"><h3 data-target="10300">0</h3><p>TikTok Likes</p></div>
+</div>
+
+<div class="packs">
+  <h2>EDIT PACKS</h2>
+  <div class="line"></div>
+
+  <div class="pack-box">
+    <h3>Green Screen Pack</h3>
+    <p>Flashes, overlays, transitions & effects used in my edits.</p>
+
+    <!-- ✅ THIS IS THE ONLY CRITICAL PART -->
+    <a class="download" href="greenscreenpack.zip" download>
+      Download Pack
+    </a>
   </div>
 </div>
 
-<!-- EDITS -->
-<div class="gridCards">
-  <div class="card"><iframe src="https://www.youtube.com/embed/ecS-z1i5TcU"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/9aejUaq9Mhc"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/HQ293NZgObM"></iframe></div>
-  <div class="card"><iframe src="https://www.youtube.com/embed/VhAWA0iRMEM"></iframe></div>
-</div>
-
-<footer class="footer">
-  © 2026 Gibbkayyy. All rights reserved.
+<footer>
+  © 2026 Gibbkayyy
 </footer>
 
 <script>
-window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
+// floating boxes
+const bg = document.getElementById("bg");
 
-  loader.style.opacity = "0";
-
-  setTimeout(() => {
-    loader.style.display = "none";
-    document.body.classList.remove("loading");
-
-    initScrollCounter();
-  }, 600);
-});
-
-let started = false;
-
-function initScrollCounter() {
-  const stats = document.querySelector(".stats");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !started) {
-        started = true;
-        startCounter();
-      }
-    });
-  }, { threshold: 0.4 });
-
-  observer.observe(stats);
-}
-
-function startCounter() {
-  const counters = document.querySelectorAll("[data-target]");
-
-  counters.forEach(counter => {
-    const update = () => {
-      const target = +counter.getAttribute("data-target");
-      const current = +counter.innerText;
-      const increment = target / 100;
-
-      if (current < target) {
-        counter.innerText = Math.ceil(current + increment);
-        setTimeout(update, 20);
-      } else {
-        counter.innerText = target;
-      }
-    };
-
-    update();
-  });
+for (let i = 0; i < 25; i++) {
+  const d = document.createElement("div");
+  d.className = "box";
+  d.style.left = Math.random()*100 + "vw";
+  d.style.animationDuration = (8 + Math.random()*10) + "s";
+  bg.appendChild(d);
 }
 </script>
 
