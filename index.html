@@ -193,6 +193,7 @@ body {
   border:1px solid rgba(0,255,136,0.2);
   border-radius:15px;
   transition:0.25s;
+  margin-bottom:20px;
 }
 
 .pack-box:hover {
@@ -214,6 +215,12 @@ body {
 .download:hover {
   background:#00ff88;
   color:black;
+}
+
+/* COMING SOON */
+.coming {
+  opacity:0.5;
+  border-style:dashed;
 }
 
 /* FOOTER */
@@ -260,18 +267,34 @@ footer {
   <h2>EDIT PACKS</h2>
   <div class="line"></div>
 
+  <!-- CURRENT PACK -->
   <div class="pack-box">
     <h3>Green Screen Pack</h3>
     <p>Free Green Screen Images for editing.</p>
 
-    <div style="margin-top:10px; font-size:1.2rem; opacity:0.8;">
-      Downloads: <span id="downloadCount">...</span>
-    </div>
+    <p style="margin-top:10px; opacity:0.7;">
+      File Size: 24MB
+    </p>
 
-    <a class="download" href="greenscreenpack.zip" download id="downloadBtn">
+    <a class="download" href="greenscreenpack.zip" download>
       Download Pack
     </a>
   </div>
+
+  <!-- COMING SOON PACK -->
+  <div class="pack-box coming">
+    <h3>Velocity Edit Pack</h3>
+    <p>Coming soon — advanced velocity clips + overlays.</p>
+
+    <p style="margin-top:10px; opacity:0.6;">
+      File Size: ???
+    </p>
+
+    <a class="download" style="pointer-events:none; opacity:0.5;">
+      Coming Soon
+    </a>
+  </div>
+
 </div>
 
 <footer>
@@ -317,28 +340,6 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 
 observer.observe(document.querySelector(".stats"));
-
-/* 🌍 FAST GLOBAL DOWNLOAD COUNTER */
-const namespace = "gibbkayyy_downloads";
-const countEl = document.getElementById("downloadCount");
-
-fetch(`https://api.countapi.xyz/get/${namespace}/total`)
-  .then(res => res.json())
-  .then(data => {
-    countEl.innerText = data.value ?? 0;
-  })
-  .catch(() => countEl.innerText = "0");
-
-document.getElementById("downloadBtn").addEventListener("click", () => {
-  fetch(`https://api.countapi.xyz/hit/${namespace}/total`)
-    .then(res => res.json())
-    .then(data => {
-      countEl.innerText = data.value;
-    })
-    .catch(() => {
-      countEl.innerText = parseInt(countEl.innerText || 0) + 1;
-    });
-});
 
 </script>
 
