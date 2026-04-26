@@ -264,13 +264,13 @@ footer {
     <h3>Green Screen Pack</h3>
     <p>Free Green Screen Images for editing.</p>
 
-    <a class="download" href="greenscreenpack.zip" download onclick="trackDownload()">
+    <div style="margin-top:10px; font-size:1.2rem; opacity:0.8;">
+      Downloads: <span id="downloadCount">...</span>
+    </div>
+
+    <a class="download" href="greenscreenpack.zip" download id="downloadBtn">
       Download Pack
     </a>
-
-    <div style="margin-top:20px; font-size:1.2rem; opacity:0.8;">
-      Downloads: <span id="downloadCount">Loading...</span>
-    </div>
   </div>
 </div>
 
@@ -318,26 +318,27 @@ const observer = new IntersectionObserver(entries => {
 
 observer.observe(document.querySelector(".stats"));
 
-/* 🌍 GLOBAL DOWNLOAD COUNTER */
+/* 🌍 FAST GLOBAL DOWNLOAD COUNTER */
 const namespace = "gibbkayyy_downloads";
+const countEl = document.getElementById("downloadCount");
 
-async function initCounter() {
-  await fetch(`https://api.countapi.xyz/create?namespace=${namespace}&key=total&value=0`);
-}
+fetch(`https://api.countapi.xyz/get/${namespace}/total`)
+  .then(res => res.json())
+  .then(data => {
+    countEl.innerText = data.value ?? 0;
+  })
+  .catch(() => countEl.innerText = "0");
 
-async function loadDownloads() {
-  let res = await fetch(`https://api.countapi.xyz/get/${namespace}/total`);
-  let data = await res.json();
-  document.getElementById("downloadCount").innerText = data.value ?? 0;
-}
-
-async function trackDownload() {
-  let res = await fetch(`https://api.countapi.xyz/hit/${namespace}/total`);
-  let data = await res.json();
-  document.getElementById("downloadCount").innerText = data.value;
-}
-
-initCounter().then(loadDownloads);
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  fetch(`https://api.countapi.xyz/hit/${namespace}/total`)
+    .then(res => res.json())
+    .then(data => {
+      countEl.innerText = data.value;
+    })
+    .catch(() => {
+      countEl.innerText = parseInt(countEl.innerText || 0) + 1;
+    });
+});
 
 </script>
 
