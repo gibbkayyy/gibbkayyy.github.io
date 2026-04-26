@@ -254,7 +254,6 @@ footer {
   <div class="stat"><h3 data-target="50">0</h3><p>Edits</p></div>
   <div class="stat"><h3 data-target="1000">0</h3><p>TikTok Followers</p></div>
   <div class="stat"><h3 data-target="10300">0</h3><p>TikTok Likes</p></div>
-  <div class="stat"><h3 id="downloadCount">0</h3><p>Total Downloads</p></div>
 </div>
 
 <div class="packs">
@@ -268,6 +267,10 @@ footer {
     <a class="download" href="greenscreenpack.zip" download onclick="trackDownload()">
       Download Pack
     </a>
+
+    <div style="margin-top:20px; font-size:1.2rem; opacity:0.8;">
+      Downloads: <span id="downloadCount">Loading...</span>
+    </div>
   </div>
 </div>
 
@@ -318,19 +321,23 @@ observer.observe(document.querySelector(".stats"));
 /* 🌍 GLOBAL DOWNLOAD COUNTER */
 const namespace = "gibbkayyy_downloads";
 
+async function initCounter() {
+  await fetch(`https://api.countapi.xyz/create?namespace=${namespace}&key=total&value=0`);
+}
+
 async function loadDownloads() {
   let res = await fetch(`https://api.countapi.xyz/get/${namespace}/total`);
   let data = await res.json();
-  document.getElementById("downloadCount").innerText = data.value || 0;
+  document.getElementById("downloadCount").innerText = data.value ?? 0;
 }
 
 async function trackDownload() {
-  fetch(`https://api.countapi.xyz/hit/${namespace}/total`);
-  let el = document.getElementById("downloadCount");
-  el.innerText = parseInt(el.innerText) + 1;
+  let res = await fetch(`https://api.countapi.xyz/hit/${namespace}/total`);
+  let data = await res.json();
+  document.getElementById("downloadCount").innerText = data.value;
 }
 
-loadDownloads();
+initCounter().then(loadDownloads);
 
 </script>
 
