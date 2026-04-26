@@ -18,7 +18,7 @@ body {
   overflow-x:hidden;
 }
 
-/* 🟢 OLD CIRCLE LOADING SCREEN */
+/* LOADER */
 .loader {
   position:fixed;
   inset:0;
@@ -49,7 +49,7 @@ body {
   to { opacity:0; visibility:hidden; }
 }
 
-/* 🟩 GRID BACKGROUND */
+/* BG */
 .bg {
   position:fixed;
   inset:0;
@@ -60,13 +60,10 @@ body {
   content:"";
   position:absolute;
   inset:0;
-
   background-image:
     linear-gradient(rgba(0,255,136,0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,255,136,0.08) 1px, transparent 1px);
-
   background-size:60px 60px;
-
   animation: gridMove 14s linear infinite;
 }
 
@@ -230,15 +227,12 @@ footer {
 
 <body>
 
-<!-- LOADER -->
 <div class="loader">
   <div class="circle"></div>
 </div>
 
-<!-- BACKGROUND -->
 <div class="bg"></div>
 
-<!-- HERO -->
 <div class="hero">
   <div class="title">GIBBKAYYY</div>
   <div class="tagline">Made To Be Watched</div>
@@ -249,22 +243,20 @@ footer {
   </div>
 </div>
 
-<!-- ABOUT -->
 <div class="about">
   <h2>News</h2>
   <p>New Green Screen Edit Pack! | Posting Edits on Saturday & Sunday.</p>
 </div>
 
-<!-- STATS -->
 <div class="stats">
   <div class="stat"><h3 data-target="400">0</h3><p>YouTube Subs</p></div>
   <div class="stat"><h3 data-target="140000">0</h3><p>Total Views</p></div>
   <div class="stat"><h3 data-target="50">0</h3><p>Edits</p></div>
   <div class="stat"><h3 data-target="1000">0</h3><p>TikTok Followers</p></div>
   <div class="stat"><h3 data-target="10300">0</h3><p>TikTok Likes</p></div>
+  <div class="stat"><h3 id="downloadCount">0</h3><p>Total Downloads</p></div>
 </div>
 
-<!-- PACKS -->
 <div class="packs">
   <h2>EDIT PACKS</h2>
   <div class="line"></div>
@@ -273,7 +265,7 @@ footer {
     <h3>Green Screen Pack</h3>
     <p>Free Green Screen Images for editing.</p>
 
-    <a class="download" href="greenscreenpack.zip" download>
+    <a class="download" href="greenscreenpack.zip" download onclick="trackDownload()">
       Download Pack
     </a>
   </div>
@@ -296,7 +288,6 @@ const observer = new IntersectionObserver(entries => {
       document.querySelectorAll("[data-target]").forEach(el => {
         let target = +el.dataset.target;
         let current = 0;
-
         let step = target / 90;
 
         let timer = setInterval(() => {
@@ -323,6 +314,23 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 
 observer.observe(document.querySelector(".stats"));
+
+/* 🌍 GLOBAL DOWNLOAD COUNTER */
+const namespace = "gibbkayyy_downloads";
+
+async function loadDownloads() {
+  let res = await fetch(`https://api.countapi.xyz/get/${namespace}/total`);
+  let data = await res.json();
+  document.getElementById("downloadCount").innerText = data.value || 0;
+}
+
+async function trackDownload() {
+  fetch(`https://api.countapi.xyz/hit/${namespace}/total`);
+  let el = document.getElementById("downloadCount");
+  el.innerText = parseInt(el.innerText) + 1;
+}
+
+loadDownloads();
 
 </script>
 
