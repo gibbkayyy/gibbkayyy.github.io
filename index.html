@@ -9,6 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+/* 1. Added smooth scrolling right here */
+html {
+  scroll-behavior: smooth;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 body {
@@ -16,6 +21,23 @@ body {
   background:#000;
   color:white;
   overflow-x:hidden;
+}
+
+/* EXTRA EASY ADDITION: Custom Neon Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.3);
+  border-radius: 5px;
+  border: 2px solid #000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
 }
 
 /* LOADER */
@@ -93,6 +115,7 @@ body {
   justify-content:center;
   align-items:center;
   text-align:center;
+  position: relative;
 }
 
 .title {
@@ -102,7 +125,7 @@ body {
   text-shadow:0 0 25px #00ff88;
 }
 
-.tagline { opacity:0.8; }
+.tagline { opacity:0.8; margin-bottom: 20px; }
 
 .btn {
   display:inline-block;
@@ -120,6 +143,23 @@ body {
   color:black;
   box-shadow:0 0 25px #00ff88;
   transform:scale(1.05);
+}
+
+/* EXTRA EASY ADDITION: Animated Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  opacity: 0.5;
+  animation: bounce 2s infinite;
+  color: #00ff88;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
 }
 
 /* ABOUT */
@@ -287,6 +327,28 @@ footer {
   padding:30px;
   opacity:0.6;
 }
+
+/* 2. Added Top Button Style styling here */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #000;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  z-index: 99;
+  transition: 0.2s ease;
+}
+
+.scroll-top-btn:hover {
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 15px #00ff88;
+}
 </style>
 </head>
 
@@ -306,6 +368,8 @@ footer {
     <a class="btn" href="https://www.youtube.com/@gibbkayyy" target="_blank">YouTube</a>
     <a class="btn" href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok</a>
   </div>
+
+  <div class="scroll-indicator">SCROLL DOWN ↓</div>
 </div>
 
 <div class="about">
@@ -327,7 +391,7 @@ footer {
   
   <div class="edits-grid">
     <div class="edit-card">
-      <video controls preload="metadata">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit1.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -338,7 +402,7 @@ footer {
     </div>
 
     <div class="edit-card">
-      <video controls preload="metadata">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit2.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -349,7 +413,7 @@ footer {
     </div>
 
     <div class="edit-card">
-      <video controls preload="metadata">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit3.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -396,6 +460,8 @@ footer {
 <footer>
   © 2026 gibbkayyy. All rights reserved.
 </footer>
+
+<a href="#" class="scroll-top-btn">↑ Top</a>
 
 <script>
 
