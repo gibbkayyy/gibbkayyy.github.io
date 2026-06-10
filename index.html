@@ -166,6 +166,64 @@ body {
   font-size:2rem;
 }
 
+/* EDITS SECTION */
+.edits-section {
+  text-align:center;
+  padding:60px 20px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.edits-section h2 {
+  font-family:"Bebas Neue";
+  font-size:4rem;
+  color:#00ff88;
+}
+
+.edits-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap:30px;
+  margin-top:40px;
+}
+
+.edit-card {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.edit-card:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+  transform: translateY(-5px);
+  border-color: #00ff88;
+}
+
+.edit-card video {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+  background: #000;
+}
+
+.edit-info {
+  padding: 15px;
+}
+
+.edit-info h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.8rem;
+  color: #00ff88;
+  margin-bottom: 5px;
+}
+
+.edit-info p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
 /* PACKS */
 .packs {
   text-align:center;
@@ -263,11 +321,50 @@ footer {
   <div class="stat"><h3 data-target="11800">0</h3><p>TikTok Likes</p></div>
 </div>
 
+<div class="edits-section">
+  <h2>TOP 3 EDITS</h2>
+  <div class="line"></div>
+  
+  <div class="edits-grid">
+    <div class="edit-card">
+      <video controls preload="metadata">
+        <source src="edit1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #1</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+
+    <div class="edit-card">
+      <video controls preload="metadata">
+        <source src="edit2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #2</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+
+    <div class="edit-card">
+      <video controls preload="metadata">
+        <source src="edit3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #3</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="packs">
   <h2>EDIT PACKS</h2>
   <div class="line"></div>
 
-  <!-- GREEN SCREEN PACK -->
   <div class="pack-box">
     <h3>Green Screen Pack</h3>
     <p>Free Green Screen Images for editing.</p>
@@ -281,7 +378,6 @@ footer {
     </a>
   </div>
 
-  <!-- OVERLAY PACK -->
   <div class="pack-box coming">
     <h3>Overlay Pack</h3>
     <p>Free overlays to improve edit quality.</p>
@@ -296,7 +392,7 @@ footer {
   </div>
 
 </div>
-
+  
 <footer>
   © 2026 gibbkayyy. All rights reserved.
 </footer>
