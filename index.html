@@ -23,6 +23,12 @@ body {
   overflow-x:hidden;
 }
 
+/* Hide default cursor on desktop for custom neon cursor experience */
+@media (min-width: 768px) {
+  body { cursor: none; }
+  a, button, .btn, .download, .scroll-top-btn, video, input, .slider { cursor: none !important; }
+}
+
 /* Custom Neon Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -38,6 +44,41 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #00ff88;
   box-shadow: 0 0 10px #00ff88;
+}
+
+/* CUSTOM NEON CURSOR SYSTEM */
+.custom-cursor {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #00ff88;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10000;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  display: none;
+}
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #00ff88;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10001;
+  box-shadow: 0 0 5px #00ff88;
+  display: none;
+}
+@media (min-width: 768px) {
+  .custom-cursor, .custom-cursor-dot { display: block; }
+}
+.custom-cursor.click-effect {
+  width: 25px;
+  height: 25px;
+  background: rgba(0, 255, 136, 0.2);
 }
 
 /* LOADER */
@@ -198,6 +239,66 @@ body {
 .about:hover {
   box-shadow:0 0 35px rgba(0,255,136,0.4);
   transform:translateY(-5px);
+}
+
+/* BEFORE / AFTER SLIDER ELEMENT */
+.comparison-container {
+  text-align: center;
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+.comparison-container h2 {
+  font-family: "Bebas Neue";
+  font-size: 4rem;
+  color: #00ff88;
+  margin-bottom: 5px;
+}
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 12px;
+}
+.slider-wrapper .img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+/* Replace linear-gradients below with real assets paths e.g., url('raw.jpg') later */
+.background-img {
+  background-image: linear-gradient(45deg, #001a0e, #00ff88);
+}
+.foreground-img {
+  background-image: linear-gradient(45deg, #333, #111);
+  width: 50% !important;
+}
+.slider {
+  position: absolute;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  opacity: 0;
+  z-index: 3;
+}
+.slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #00ff88;
+  z-index: 2;
+  box-shadow: 0 0 10px #00ff88;
+  pointer-events: none;
 }
 
 /* STATS */
@@ -388,6 +489,9 @@ footer {
 
 <body>
 
+<div class="custom-cursor"></div>
+<div class="custom-cursor-dot"></div>
+
 <canvas id="matrixCanvas" style="position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:0.15;"></canvas>
 
 <div class="loader">
@@ -410,186 +514,4 @@ footer {
 
 <div class="about reveal">
   <h2>News</h2>
-  <p>Top 3 edits section | New editing pack coming very soon!</p>
-</div>
-
-<div class="stats">
-  <div class="stat"><h3 data-target="400">0</h3><p>YouTube Subs</p></div>
-  <div class="stat"><h3 data-target="160000">0</h3><p>Total Youtube Views</p></div>
-  <div class="stat"><h3 data-target="70">0</h3><p>Edits</p></div>
-  <div class="stat"><h3 data-target="1000">0</h3><p>TikTok Followers</p></div>
-  <div class="stat"><h3 data-target="11800">0</h3><p>TikTok Likes</p></div>
-</div>
-
-<div class="edits-section">
-  <h2>TOP 3 EDITS</h2>
-  <div class="line"></div>
-  
-  <div class="edits-grid">
-    <div class="edit-card reveal">
-      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
-        <source src="edit1.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="edit-info">
-        <h3>Edit #1</h3>
-        <p>Featured Creation</p>
-      </div>
-    </div>
-
-    <div class="edit-card reveal">
-      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
-        <source src="edit2.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="edit-info">
-        <h3>Edit #2</h3>
-        <p>Featured Creation</p>
-      </div>
-    </div>
-
-    <div class="edit-card reveal">
-      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
-        <source src="edit3.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="edit-info">
-        <h3>Edit #3</h3>
-        <p>Featured Creation</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="packs">
-  <h2>EDIT PACKS</h2>
-  <div class="line"></div>
-
-  <div class="pack-box reveal">
-    <h3>Green Screen Pack</h3>
-    <p>Free Green Screen Images for editing.</p>
-
-    <p style="margin-top:10px; opacity:0.7;">
-      File Size: 209KB
-    </p>
-
-    <a class="download" href="greenscreenpack.zip" download>
-      Download Pack
-    </a>
-  </div>
-
-  <div class="pack-box coming reveal">
-    <h3>Overlay Pack</h3>
-    <p>Free overlays to improve edit quality.</p>
-
-    <p style="margin-top:10px; opacity:0.6;">
-      File Size: Coming Very Soon
-    </p>
-
-    <a class="download" style="pointer-events:none; opacity:0.5;">
-      Coming Very Soon
-    </a>
-  </div>
-
-</div>
-  
-<footer>
-  © 2026 gibbkayyy. All rights reserved.
-</footer>
-
-<a href="#" class="scroll-top-btn">↑ Top</a>
-
-<script>
-
-/* 📊 DYNAMIC STAT COUNTER SETUP */
-let ran = false;
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting && !ran) {
-      ran = true;
-
-      document.querySelectorAll("[data-target]").forEach(el => {
-        let target = +el.dataset.target;
-        let current = 0;
-        // Optimization: ensures lower numbers like "70" complete simultaneously with huge numbers
-        let step = Math.max(Math.ceil(target / 90), 1);
-
-        let timer = setInterval(() => {
-          current += step;
-
-          if (current >= target) {
-            if (target >= 1000) {
-              el.innerText = (target / 1000).toFixed(target >= 10000 ? 0 : 1) + "K+";
-            } else {
-              el.innerText = target + "+";
-            }
-            clearInterval(timer);
-          } else {
-            if (target >= 1000) {
-              el.innerText = (current / 1000).toFixed(1) + "K+";
-            } else {
-              el.innerText = Math.floor(current) + "+";
-            }
-          }
-        }, 20);
-      });
-    }
-  });
-}, { threshold: 0.4 });
-
-observer.observe(document.querySelector(".stats"));
-
-
-/* 🟢 DYNAMIC MATRIX BACKDROP EFFECT */
-const canvas = document.getElementById('matrixCanvas');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const letters = '010101GIBBKAYYYEDITSCODE';
-const alphabet = letters.split('');
-const fontSize = 16;
-let columns = canvas.width / fontSize;
-const rainDrops = Array(Math.floor(columns)).fill(1);
-
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#00ff88';
-    ctx.font = fontSize + 'px monospace';
-
-    for (let i = 0; i < rainDrops.length; i++) {
-        const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-
-        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            rainDrops[i] = 0;
-        }
-        rainDrops[i]++;
-    }
-}
-setInterval(drawMatrix, 30);
-
-
-/* 📜 SMOOTH SCROLL REVEAL ACTIONS */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-</script>
-
-</body>
-</html>
+  <p>Top 3 edits section | New editing pack coming very soon
