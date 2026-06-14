@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* 1. Added smooth scrolling right here */
+/* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
 }
@@ -23,7 +23,7 @@ body {
   overflow-x:hidden;
 }
 
-/* EXTRA EASY ADDITION: Custom Neon Scrollbar */
+/* Custom Neon Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -71,7 +71,7 @@ body {
   to { opacity:0; visibility:hidden; }
 }
 
-/* BG */
+/* BG & Matrix Background */
 .bg {
   position:fixed;
   inset:0;
@@ -119,10 +119,32 @@ body {
 }
 
 .title {
-  font-family:"Bebas Neue";
-  font-size:6rem;
-  color:#00ff88;
-  text-shadow:0 0 25px #00ff88;
+  font-family: "Bebas Neue";
+  font-size: 6rem;
+  color: #fff;
+  text-shadow: 
+    0 0 5px #00ff88,
+    0 0 10px #00ff88,
+    0 0 20px #00ff88,
+    0 0 40px #00ff88;
+  animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 4px #00ff88,
+      0 0 10px #00ff88,
+      0 0 18px #00ff88,
+      0 0 40px #00ff88;
+  }
+  50% {
+    text-shadow: 
+      0 0 8px #00ff88,
+      0 0 15px #00ff88,
+      0 0 30px #00ff88,
+      0 0 60px #00ff88;
+  }
 }
 
 .tagline { opacity:0.8; margin-bottom: 20px; }
@@ -145,7 +167,7 @@ body {
   transform:scale(1.05);
 }
 
-/* EXTRA EASY ADDITION: Animated Scroll Indicator */
+/* Animated Scroll Indicator */
 .scroll-indicator {
   position: absolute;
   bottom: 30px;
@@ -232,7 +254,7 @@ body {
   border: 1px solid rgba(0, 255, 136, 0.2);
   border-radius: 12px;
   overflow: hidden;
-  transition: 0.3s ease;
+  transition: 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .edit-card:hover {
@@ -290,7 +312,7 @@ body {
   padding:40px;
   border:1px solid rgba(0,255,136,0.2);
   border-radius:15px;
-  transition:0.25s;
+  transition: 0.25s, transform 0.25s, box-shadow 0.25s;
   margin-bottom:20px;
 }
 
@@ -321,6 +343,18 @@ body {
   border-style:dashed;
 }
 
+/* SCROLL REVEAL ANIMATION CLASSES */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* FOOTER */
 footer {
   text-align:center;
@@ -328,7 +362,7 @@ footer {
   opacity:0.6;
 }
 
-/* 2. Added Top Button Style styling here */
+/* Scroll Top Button Styling */
 .scroll-top-btn {
   position: fixed;
   bottom: 20px;
@@ -354,6 +388,8 @@ footer {
 
 <body>
 
+<canvas id="matrixCanvas" style="position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:0.15;"></canvas>
+
 <div class="loader">
   <div class="circle"></div>
 </div>
@@ -372,7 +408,7 @@ footer {
   <div class="scroll-indicator">SCROLL DOWN ↓</div>
 </div>
 
-<div class="about">
+<div class="about reveal">
   <h2>News</h2>
   <p>Top 3 edits section | New editing pack coming very soon!</p>
 </div>
@@ -390,7 +426,7 @@ footer {
   <div class="line"></div>
   
   <div class="edits-grid">
-    <div class="edit-card">
+    <div class="edit-card reveal">
       <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit1.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -401,7 +437,7 @@ footer {
       </div>
     </div>
 
-    <div class="edit-card">
+    <div class="edit-card reveal">
       <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit2.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -412,7 +448,7 @@ footer {
       </div>
     </div>
 
-    <div class="edit-card">
+    <div class="edit-card reveal">
       <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
         <source src="edit3.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -429,7 +465,7 @@ footer {
   <h2>EDIT PACKS</h2>
   <div class="line"></div>
 
-  <div class="pack-box">
+  <div class="pack-box reveal">
     <h3>Green Screen Pack</h3>
     <p>Free Green Screen Images for editing.</p>
 
@@ -442,7 +478,7 @@ footer {
     </a>
   </div>
 
-  <div class="pack-box coming">
+  <div class="pack-box coming reveal">
     <h3>Overlay Pack</h3>
     <p>Free overlays to improve edit quality.</p>
 
@@ -465,7 +501,7 @@ footer {
 
 <script>
 
-/* 📊 STATS */
+/* 📊 DYNAMIC STAT COUNTER SETUP */
 let ran = false;
 
 const observer = new IntersectionObserver(entries => {
@@ -476,7 +512,8 @@ const observer = new IntersectionObserver(entries => {
       document.querySelectorAll("[data-target]").forEach(el => {
         let target = +el.dataset.target;
         let current = 0;
-        let step = target / 90;
+        // Optimization: ensures lower numbers like "70" complete simultaneously with huge numbers
+        let step = Math.max(Math.ceil(target / 90), 1);
 
         let timer = setInterval(() => {
           current += step;
@@ -502,6 +539,55 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 
 observer.observe(document.querySelector(".stats"));
+
+
+/* 🟢 DYNAMIC MATRIX BACKDROP EFFECT */
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const letters = '010101GIBBKAYYYEDITSCODE';
+const alphabet = letters.split('');
+const fontSize = 16;
+let columns = canvas.width / fontSize;
+const rainDrops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#00ff88';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+    }
+}
+setInterval(drawMatrix, 30);
+
+
+/* 📜 SMOOTH SCROLL REVEAL ACTIONS */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 </script>
 
