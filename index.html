@@ -514,4 +514,259 @@ footer {
 
 <div class="about reveal">
   <h2>News</h2>
-  <p>Top 3 edits section | New editing pack coming very soon
+  <p>Top 3 edits section | New editing pack coming very soon!</p>
+</div>
+
+<div class="comparison-container reveal">
+  <h2>Raw vs Final Grade</h2>
+  <div class="line"></div>
+  <div class="slider-wrapper">
+    <div class="img background-img"></div>
+    <div class="img foreground-img"></div>
+    <input type="range" min="1" max="100" value="50" class="slider" id="compare-slider">
+    <div class="slider-line"></div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><h3 data-target="400">0</h3><p>YouTube Subs</p></div>
+  <div class="stat"><h3 data-target="160000">0</h3><p>Total Youtube Views</p></div>
+  <div class="stat"><h3 data-target="70">0</h3><p>Edits</p></div>
+  <div class="stat"><h3 data-target="1000">0</h3><p>TikTok Followers</p></div>
+  <div class="stat"><h3 data-target="11800">0</h3><p>TikTok Likes</p></div>
+</div>
+
+<div class="edits-section">
+  <h2>TOP 3 EDITS</h2>
+  <div class="line"></div>
+  
+  <div class="edits-grid">
+    <div class="edit-card reveal">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
+        <source src="edit1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #1</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+
+    <div class="edit-card reveal">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
+        <source src="edit2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #2</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+
+    <div class="edit-card reveal">
+      <video controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata">
+        <source src="edit3.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="edit-info">
+        <h3>Edit #3</h3>
+        <p>Featured Creation</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="packs">
+  <h2>EDIT PACKS</h2>
+  <div class="line"></div>
+
+  <div class="pack-box reveal">
+    <h3>Green Screen Pack</h3>
+    <p>Free Green Screen Images for editing.</p>
+
+    <p style="margin-top:10px; opacity:0.7;">
+      File Size: 209KB
+    </p>
+
+    <a class="download" href="greenscreenpack.zip" download>
+      Download Pack
+    </a>
+  </div>
+
+  <div class="pack-box coming reveal">
+    <h3>Overlay Pack</h3>
+    <p>Free overlays to improve edit quality.</p>
+
+    <p style="margin-top:10px; opacity:0.6;">
+      File Size: Coming Very Soon
+    </p>
+
+    <a class="download" style="pointer-events:none; opacity:0.5;">
+      Coming Very Soon
+    </a>
+  </div>
+
+</div>
+  
+<footer>
+  © 2026 gibbkayyy. All rights reserved.
+</footer>
+
+<a href="#" class="scroll-top-btn">↑ Top</a>
+
+<script>
+
+/* 📊 DYNAMIC STAT COUNTER SETUP */
+let ran = false;
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !ran) {
+      ran = true;
+
+      document.querySelectorAll("[data-target]").forEach(el => {
+        let target = +el.dataset.target;
+        let current = 0;
+        let step = Math.max(Math.ceil(target / 90), 1);
+
+        let timer = setInterval(() => {
+          current += step;
+
+          if (current >= target) {
+            if (target >= 1000) {
+              el.innerText = (target / 1000).toFixed(target >= 10000 ? 0 : 1) + "K+";
+            } else {
+              el.innerText = target + "+";
+            }
+            clearInterval(timer);
+          } else {
+            if (target >= 1000) {
+              el.innerText = (current / 1000).toFixed(1) + "K+";
+            } else {
+              el.innerText = Math.floor(current) + "+";
+            }
+          }
+        }, 20);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+observer.observe(document.querySelector(".stats"));
+
+
+/* 🟢 DYNAMIC MATRIX BACKDROP EFFECT */
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const letters = '010101GIBBKAYYYEDITSCODE';
+const alphabet = letters.split('');
+const fontSize = 16;
+let columns = canvas.width / fontSize;
+const rainDrops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#00ff88';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+    }
+}
+setInterval(drawMatrix, 30);
+
+
+/* 📜 SMOOTH SCROLL REVEAL ACTIONS */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+/* 🎛️ BEFORE/AFTER INTERACTIVE SLIDER ENGINE */
+const slider = document.getElementById('compare-slider');
+const foregroundImg = document.querySelector('.foreground-img');
+const sliderLine = document.querySelector('.slider-line');
+
+if(slider) {
+  slider.addEventListener('input', (e) => {
+    const sliderValue = e.target.value;
+    foregroundImg.style.width = sliderValue + '%';
+    sliderLine.style.left = sliderValue + '%';
+  });
+}
+
+
+/* 🎯 DESKTOP NEON CURSOR TRACKING Engine */
+const cursor = document.querySelector('.custom-cursor');
+const cursorDot = document.querySelector('.custom-cursor-dot');
+
+if(cursor && cursorDot) {
+  window.addEventListener('mousemove', (e) => {
+    cursor.style.animate([
+      { left: cursor.style.left, top: cursor.style.top },
+      { left: `${e.clientX}px`, top: `${e.clientY}px` }
+    ], { duration: 100, fill: 'forwards' });
+    
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+  });
+
+  window.addEventListener('mousedown', () => cursor.classList.add('click-effect'));
+  window.addEventListener('mouseup', () => cursor.classList.remove('click-effect'));
+}
+
+
+/* 🔊 AUDIO SYNTH HOVER INTERACTIONS (Web Audio API) */
+function playHoverSound() {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
+
+        gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime); 
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.08);
+    } catch(e) {
+        // Fallback silently if browser audio rules block it initially
+    }
+}
+
+document.querySelectorAll('.btn, .download, .scroll-top-btn, .edit-card, .pack-box').forEach(item => {
+    item.addEventListener('mouseenter', playHoverSound);
+});
+
+</script>
+
+</body>
+</html>
