@@ -92,8 +92,11 @@ header {
   color: #fff;
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
 }
+.nav-container {
+  display: flex; align-items: center; gap: 15px;
+}
 .nav-tabs {
-  display: flex; gap: 10px;
+  display: flex; gap: 8px;
   background: rgba(20, 20, 20, 0.6);
   padding: 5px;
   border-radius: 30px;
@@ -103,7 +106,7 @@ header {
   background: transparent;
   border: none;
   color: #888;
-  padding: 8px 18px;
+  padding: 8px 16px;
   border-radius: 20px;
   font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
@@ -116,6 +119,25 @@ header {
   background: #00ff88;
   color: #000;
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+}
+
+/* Header Search Input */
+.header-search {
+  background: rgba(15, 15, 15, 0.7);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  width: 150px;
+  transition: 0.3s;
+}
+.header-search:focus {
+  width: 210px;
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
 }
 
 /* Main Container */
@@ -419,6 +441,48 @@ main {
 .pack-card p { color: #aaa; font-size: 0.9rem; margin-bottom: 15px; }
 .pack-size { color: #666; font-size: 0.8rem; margin-bottom: 20px; }
 
+/* FEEDBACK TAB */
+.feedback-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.feedback-input, .feedback-textarea {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 10px;
+  padding: 14px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: 0.3s;
+}
+.feedback-input:focus, .feedback-textarea:focus {
+  border-color: #00ff88;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+.feedback-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+.feedback-success {
+  display: none;
+  background: rgba(0, 255, 136, 0.15);
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -439,6 +503,9 @@ footer {
     padding: 12px 15px; 
   }
   .brand { font-size: 1.8rem; }
+  .nav-container { flex-direction: column; width: 100%; gap: 10px; }
+  .nav-tabs { width: 100%; justify-content: center; overflow-x: auto; }
+  .header-search { width: 100%; }
   
   .hero-title { font-size: 4.5rem; }
   
@@ -493,12 +560,16 @@ footer {
 
 <header>
   <div class="brand">GIBBKAYYY</div>
-  <nav class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('home')">Home</button>
-    <button class="tab-btn" onclick="switchTab('edits')">Edits</button>
-    <button class="tab-btn" onclick="switchTab('tutorials')">Tutorials</button>
-    <button class="tab-btn" onclick="switchTab('packs')">Edit Packs</button>
-  </nav>
+  <div class="nav-container">
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('home')">Home</button>
+      <button class="tab-btn" onclick="switchTab('edits')">Edits</button>
+      <button class="tab-btn" onclick="switchTab('tutorials')">Tutorials</button>
+      <button class="tab-btn" onclick="switchTab('packs')">Edit Packs</button>
+      <button class="tab-btn" onclick="switchTab('feedback')">Feedback</button>
+    </nav>
+    <input type="text" id="globalSearch" class="header-search" placeholder="🔍 Search..." onkeyup="handleSearch(event)">
+  </div>
   <button id="installAppBtn" class="btn" style="padding: 6px 14px; font-size: 0.8rem;" onclick="triggerInstall()">
     📲 INSTALL APP
   </button>
@@ -530,12 +601,11 @@ footer {
       <div class="glass-panel">
         <span class="news-badge">LATEST UPDATES</span>
         <div class="updates-list">
+          <div class="update-item">Search Bar & Feedback Page added 🚀</div>
           <div class="update-item">Website rework 🛠️</div>
           <div class="update-item">New Edits 🎬</div>
           <div class="update-item">Timers ⌛</div>
           <div class="update-item">New Favicon 🖼️</div>
-          <div class="update-item">Removed Cursor ❌</div>
-          <div class="update-item">Bug Fixes 🐛</div>
         </div>
       </div>
 
@@ -571,18 +641,18 @@ footer {
     </div>
 
     <div class="edits-grid">
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/bqt-VpeVdkU" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/8t2iBYpKoA0" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/5nmtcvrufNw" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/-Dvh2T_v7l0" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/wXzVd3X5vKs" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/WVpr3p8EfAY" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/CYKSpRvfIjM" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/VvAh5q8IDr0" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/n5lsX1E-EEk" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/LoeTvwPciZM" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/txADLuvM0wY" allowfullscreen></iframe></div></div>
-      <div class="edit-card"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/c_hNk8FtXRc" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 1"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/bqt-VpeVdkU" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 2"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/8t2iBYpKoA0" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 3"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/5nmtcvrufNw" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 4"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/-Dvh2T_v7l0" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 5"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/wXzVd3X5vKs" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 6"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/WVpr3p8EfAY" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 7"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/CYKSpRvfIjM" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 8"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/VvAh5q8IDr0" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 9"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/n5lsX1E-EEk" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 10"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/LoeTvwPciZM" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 11"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/txADLuvM0wY" allowfullscreen></iframe></div></div>
+      <div class="edit-card" data-title="edit shorts 12"><div class="shorts-wrapper"><iframe src="https://www.youtube.com/embed/c_hNk8FtXRc" allowfullscreen></iframe></div></div>
     </div>
 
     <div class="more-edits-banner">
@@ -642,6 +712,29 @@ footer {
     </div>
   </section>
 
+  <section id="feedback" class="page-tab">
+    <div class="section-header">
+      <h2>FEEDBACK WALL</h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="feedback-container glass-panel">
+      <p style="text-align:center; color:#888; margin-bottom:20px; font-size:0.9rem;">
+        Drop anonymous feedback, suggestions, or hype messages below! 👇
+      </p>
+      
+      <form class="feedback-form" onsubmit="submitFeedback(event)">
+        <input type="text" class="feedback-input" id="feedbackName" placeholder="Your Name (Optional, leave blank for Anonymous)">
+        <textarea class="feedback-textarea" id="feedbackMsg" placeholder="Type your feedback here..." required></textarea>
+        <button type="submit" class="btn">Send Feedback 🚀</button>
+      </form>
+
+      <div id="feedbackSuccess" class="feedback-success">
+        ✨ Success! Your feedback has been sent anonymously. Thanks for helping improve the site!
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -655,11 +748,65 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   
   document.getElementById(tabId).classList.add('active-page');
-  event.currentTarget.classList.add('active');
+  
+  // Highlight matching navbar button if available
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId)) {
+      btn.classList.add('active');
+    }
+  });
 
   if (tabId === 'home') {
     runStatCounter();
   }
+}
+
+/* 🔍 INSTANT SEARCH BAR SYSTEM */
+function handleSearch(event) {
+  const query = event.target.value.toLowerCase().trim();
+  if (!query) return;
+
+  // Check if query matches tab names
+  if ('home'.includes(query)) { switchTab('home'); return; }
+  if ('edits'.includes(query)) { switchTab('edits'); return; }
+  if ('tutorials'.includes(query) || 'tutorial'.includes(query)) { switchTab('tutorials'); return; }
+  if ('packs'.includes(query) || 'edit packs'.includes(query)) { switchTab('packs'); return; }
+  if ('feedback'.includes(query)) { switchTab('feedback'); return; }
+
+  // If user is typing keywords inside Edits tab
+  let matchedEdits = 0;
+  document.querySelectorAll('.edit-card').forEach(card => {
+    let title = card.getAttribute('data-title');
+    if (title.includes(query)) {
+      card.style.display = 'block';
+      matchedEdits++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if (matchedEdits > 0) {
+    switchTab('edits');
+  }
+}
+
+/* 📥 FEEDBACK FORM SUBMISSION HANDLER */
+function submitFeedback(e) {
+  e.preventDefault();
+  const name = document.getElementById('feedbackName').value.trim() || 'Anonymous';
+  const msg = document.getElementById('feedbackMsg').value.trim();
+
+  // Clear input fields
+  document.getElementById('feedbackName').value = '';
+  document.getElementById('feedbackMsg').value = '';
+
+  // Show success notification box
+  const successBox = document.getElementById('feedbackSuccess');
+  successBox.style.display = 'block';
+  
+  setTimeout(() => {
+    successBox.style.display = 'none';
+  }, 5000);
 }
 
 /* 📊 STAT COUNTER ANIMATION */
@@ -727,15 +874,9 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 30);
 
-/* ⏱️ COUNTDOWN TIMERS */
-function setupTimer(key, daysToAdd, prefix) {
-  let targetTime = localStorage.getItem(key);
-  if (!targetTime) {
-    targetTime = Date.now() + (daysToAdd * 24 * 60 * 60 * 1000);
-    localStorage.setItem(key, targetTime);
-  } else {
-    targetTime = parseInt(targetTime, 10);
-  }
+/* ⏱️ FIXED DATE COUNTDOWN TIMERS (Synced across all devices) */
+function setupFixedTimer(targetDateString, prefix) {
+  const targetTime = new Date(targetDateString).getTime();
 
   function update() {
     const now = Date.now();
@@ -764,8 +905,9 @@ function setupTimer(key, daysToAdd, prefix) {
   setInterval(update, 1000);
 }
 
-setupTimer('gibb_pack_timer', 7, 'p');
-setupTimer('gibb_tutorial_timer', 5, 't');
+// Fixed calendar target dates
+setupFixedTimer('2026-08-11T00:00:00', 'p');
+setupFixedTimer('2026-08-09T00:00:00', 't');
 
 /* 🔊 SYNTH HOVER AUDIO EFFECT */
 let audioCtx;
@@ -796,23 +938,33 @@ document.querySelectorAll('.btn, .tab-btn, .edit-card, .pack-card, .stat-card').
   item.addEventListener('mouseenter', playHoverSound);
 });
 
-/* 📲 APP INSTALL PROMPT & GOOGLE ANALYTICS EVENT TRACKING */
+/* 📲 APP INSTALL PROMPT & AUTO-HIDE WHEN INSTALLED */
 let deferredPrompt;
+const installBtn = document.getElementById('installAppBtn');
+
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+  if (installBtn) installBtn.style.display = 'none';
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 });
 
+window.addEventListener('appinstalled', () => {
+  if (installBtn) installBtn.style.display = 'none';
+  deferredPrompt = null;
+});
+
 function triggerInstall() {
   if (!deferredPrompt) {
-    alert("To install this app:\n\n• On iPhone (Safari): Tap Share -> 'Add to Home Screen'\n• On Android: Tap top-right 3 dots -> 'Install App'");
+    alert("To install this app:\n\n• On iPhone (Safari): Tap Share -> 'Add to Home Screen'\n• On Android/Chromebook: Tap top-right 3 dots -> 'Install App'");
     return;
   }
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
-      console.log('App Installed Successfully');
+      if (installBtn) installBtn.style.display = 'none';
       if (typeof gtag === 'function') {
         gtag('event', 'app_installed', {
           'event_category': 'PWA',
