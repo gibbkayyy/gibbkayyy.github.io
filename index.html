@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gibbkayyy | Editor Hub</title>
+<title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" type="image/png" href="thor.png">
+<link rel="icon" type="image/jpeg" href="thorfavicon.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -175,7 +175,7 @@ main {
   border: 1px solid rgba(0, 255, 136, 0.3);
   border-radius: 16px;
   padding: 20px 25px;
-  margin: 0 auto 40px;
+  margin: 0 auto 30px;
   max-width: 550px;
   text-align: center;
   box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
@@ -244,8 +244,12 @@ main {
   margin-bottom: 15px;
   letter-spacing: 1px;
 }
+
+/* VERTICAL UPDATES LIST */
 .updates-list {
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .update-item {
   padding: 10px 14px;
@@ -254,6 +258,7 @@ main {
   border-radius: 0 8px 8px 0;
   font-size: 0.9rem;
   color: #ccc;
+  display: block;
 }
 
 /* Stats Layout */
@@ -472,7 +477,12 @@ footer {
       <div class="glass-panel">
         <span class="news-badge">LATEST UPDATES</span>
         <div class="updates-list">
-          <div class="update-item">Website rework</div>
+          <div class="update-item">Website rework 🛠️</div>
+          <div class="update-item">New Edits 🎬</div>
+          <div class="update-item">Timers ⌛</div>
+          <div class="update-item">New Favicon 🖼️</div>
+          <div class="update-item">Removed Cursor ❌</div>
+          <div class="update-item">Bug Fixes 🐛</div>
         </div>
       </div>
 
@@ -534,6 +544,16 @@ footer {
     </div>
 
     <div class="tutorials-container">
+      <div class="timer-container">
+        <div class="timer-title">NEW TUTORIAL WHEN TIMER HITS 0! 🔥</div>
+        <div class="timer-digits">
+          <div class="timer-block"><div class="timer-val" id="t-days">05</div><div class="timer-lbl">Days</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-hours">00</div><div class="timer-lbl">Hours</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-mins">00</div><div class="timer-lbl">Mins</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-secs">00</div><div class="timer-lbl">Secs</div></div>
+        </div>
+      </div>
+
       <div class="glass-panel" style="padding:20px;">
         <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/AEVSBnBFzYw" title="How to Make AE-LIKE text in CAPCUT!" allowfullscreen></iframe>
@@ -541,16 +561,6 @@ footer {
         <div class="tutorial-info">
           <h3>How to Make AE-LIKE text in CAPCUT! (UPDATED)</h3>
           <p>Long-form Editing Guide</p>
-        </div>
-      </div>
-
-      <div class="timer-container" style="margin-top: 30px;">
-        <div class="timer-title">NEW TUTORIAL WHEN TIMER HITS 0! 🔥</div>
-        <div class="timer-digits">
-          <div class="timer-block"><div class="timer-val" id="t-days">05</div><div class="timer-lbl">Days</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-hours">00</div><div class="timer-lbl">Hours</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-mins">00</div><div class="timer-lbl">Mins</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-secs">00</div><div class="timer-lbl">Secs</div></div>
         </div>
       </div>
     </div>
