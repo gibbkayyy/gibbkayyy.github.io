@@ -219,8 +219,14 @@ main {
   font-size: 1.6rem;
   color: #00ff88;
   letter-spacing: 1.5px;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+.timer-subtitle-note {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
 }
 .timer-digits {
   display: flex; justify-content: center; gap: 15px;
@@ -304,8 +310,8 @@ main {
 .update-desc {
   font-size: 0.8rem;
   color: #aaa;
-  margin-top: 4px;
-  line-height: 1.4;
+  margin-top: 6px;
+  line-height: 1.5;
 }
 
 /* Stats Layout */
@@ -608,7 +614,7 @@ footer {
   }
   .timer-title {
     font-size: 1.1rem;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .timer-digits {
     gap: 6px;
@@ -692,7 +698,7 @@ footer {
         <div class="updates-scroller">
           <div class="update-item-plain">
             Platform Status Notice
-            <div class="update-desc" id="platformUpdateNotice">The Site will continue receiving active updates and improvements over the next 24 hours. After this initial rollout period concludes, a scheduled countdown timer will govern all future update drops.</div>
+            <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
           <div class="update-item">Search bar added 🔍</div>
           <div class="update-item">Feedback page added 💬</div>
@@ -702,6 +708,7 @@ footer {
           <div class="update-item">New Favicon 🖼️</div>
           <div class="update-item">Removed Cursor ❌</div>
           <div class="update-item">Bug Fixes 🐛</div>
+          <div class="update-item">Clips Page & Summer Vault Added ☀️</div>
         </div>
       </div>
 
@@ -806,9 +813,10 @@ footer {
     </div>
 
     <div class="timer-container" style="border-color: rgba(255, 120, 0, 0.4); box-shadow: 0 0 25px rgba(255, 120, 0, 0.2);">
-      <div class="timer-title" style="color: #ff9900; text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);">SUMMER EXCLUSIVE PACK VAULT ☀️</div>
+      <div class="timer-title" style="color: #ff9900; text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);">Summer Exclusive Pack</div>
+      <div class="timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
       <div class="timer-digits">
-        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-days">03</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-days">04</div><div class="timer-lbl">Days</div></div>
         <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-hours">00</div><div class="timer-lbl">Hours</div></div>
         <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-mins">00</div><div class="timer-lbl">Mins</div></div>
         <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-secs">00</div><div class="timer-lbl">Secs</div></div>
@@ -852,7 +860,7 @@ footer {
 
     <div class="feedback-container glass-panel">
       <p style="text-align:center; color:#888; margin-bottom:20px; font-size:0.9rem;">
-        Drop feedback and suggestions below!
+        Drop feedback and suggestions below
       </p>
       
       <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
@@ -1138,7 +1146,7 @@ function setupFixedTimer(targetDateString, prefix) {
 // Fixed calendar target dates
 setupFixedTimer('2026-08-11T00:00:00', 'p');
 setupFixedTimer('2026-08-09T00:00:00', 't');
-setupFixedTimer('2026-08-07T00:00:00', 'v'); // 3-day summer vault timer
+setupFixedTimer('2026-08-08T00:00:00', 'v'); // 4-day summer exclusive timer
 
 /* 🔊 SYNTH HOVER AUDIO EFFECT */
 let audioCtx;
@@ -1178,9 +1186,9 @@ const isAppMode = window.matchMedia('(display-mode: standalone)').matches || win
 
 if (isAppMode) {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
+  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
 } else {
-  if (platformNotice) platformNotice.innerText = 'The Site will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
+  if (platformNotice) platformNotice.innerText = 'The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -1190,7 +1198,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
+  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
   deferredPrompt = null;
 });
 
@@ -1203,7 +1211,7 @@ function triggerInstall() {
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
       if (installBtn) installBtn.style.display = 'none';
-      if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
+      if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
       if (typeof gtag === 'function') {
         gtag('event', 'app_installed', {
           'event_category': 'PWA',
