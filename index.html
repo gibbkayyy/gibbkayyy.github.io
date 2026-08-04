@@ -202,38 +202,29 @@ main {
   transform: translateY(-2px);
 }
 
-/* SUMMER THEMED COUNTDOWN TIMER BOX */
+/* STANDARD COUNTDOWN TIMER BOX (Green) */
 .timer-container {
-  background: linear-gradient(135deg, rgba(20, 15, 10, 0.85), rgba(40, 25, 10, 0.85));
-  border: 1px solid rgba(255, 170, 0, 0.45);
+  background: rgba(15, 15, 15, 0.7);
+  border: 1px solid rgba(0, 255, 136, 0.3);
   border-radius: 16px;
   padding: 20px 25px;
   margin: 0 auto 30px;
   max-width: 550px;
   text-align: center;
-  box-shadow: 0 0 30px rgba(255, 140, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
   backdrop-filter: blur(10px);
-  position: relative;
-  overflow: hidden;
-}
-.timer-container::before {
-  content: '🏖️ 🌊 ☀️';
-  position: absolute;
-  top: 8px; right: 12px;
-  font-size: 0.85rem;
-  opacity: 0.6;
 }
 .timer-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.6rem;
-  color: #ffaa00;
+  color: #00ff88;
   letter-spacing: 1.5px;
   margin-bottom: 4px;
-  text-shadow: 0 0 12px rgba(255, 170, 0, 0.6);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 .timer-subtitle-note {
   font-size: 0.75rem;
-  color: #ffdf80;
+  color: #aaa;
   margin-bottom: 12px;
   letter-spacing: 0.5px;
 }
@@ -241,8 +232,8 @@ main {
   display: flex; justify-content: center; gap: 15px;
 }
 .timer-block {
-  background: rgba(10, 5, 0, 0.7);
-  border: 1px solid rgba(255, 170, 0, 0.3);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 255, 136, 0.2);
   border-radius: 10px;
   padding: 10px 14px;
   min-width: 70px;
@@ -254,6 +245,53 @@ main {
   line-height: 1;
 }
 .timer-lbl {
+  font-size: 0.65rem;
+  color: #888;
+  text-transform: uppercase;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* FULLY SUMMER THEMED COUNTDOWN TIMER BOX */
+.summer-timer-container {
+  background: linear-gradient(135deg, rgba(30, 20, 5, 0.9), rgba(60, 35, 10, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path d="M0 50 Q 25 30, 50 50 T 100 50" stroke="%23ffaa00" fill="none"/></svg>');
+  border: 2px solid rgba(255, 170, 0, 0.6);
+  border-radius: 16px;
+  padding: 22px 25px;
+  margin: 0 auto 30px;
+  max-width: 550px;
+  text-align: center;
+  box-shadow: 0 0 35px rgba(255, 150, 0, 0.3), inset 0 0 20px rgba(255, 200, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+.summer-timer-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  color: #ffaa00;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  text-shadow: 0 0 15px rgba(255, 170, 0, 0.7);
+}
+.summer-timer-subtitle-note {
+  font-size: 0.75rem;
+  color: #ffdf80;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+.summer-timer-block {
+  background: rgba(20, 10, 0, 0.75);
+  border: 1px solid rgba(255, 170, 0, 0.4);
+  border-radius: 10px;
+  padding: 10px 14px;
+  min-width: 70px;
+}
+.summer-timer-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: #fff;
+  line-height: 1;
+}
+.summer-timer-lbl {
   font-size: 0.65rem;
   color: #ffbb44;
   text-transform: uppercase;
@@ -549,7 +587,7 @@ footer {
   position: fixed;
   bottom: 25px;
   left: 20px;
-  transform: translateX(-120%); /* Completely hidden off-screen to the left */
+  transform: translateX(-120%);
   z-index: 9998;
   background: rgba(15, 15, 15, 0.95);
   border: 1px solid rgba(0, 255, 136, 0.4);
@@ -565,7 +603,7 @@ footer {
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .discord-toast.show {
-  transform: translateX(0); /* Slides fully into view comfortably inside screen */
+  transform: translateX(0);
 }
 .discord-icon {
   font-size: 1.8rem;
@@ -616,26 +654,26 @@ footer {
   .home-grid { grid-template-columns: 1fr; }
 
   /* Scale Down Timer Container & Blocks for Mobile Only */
-  .timer-container {
+  .timer-container, .summer-timer-container {
     padding: 12px 15px;
     max-width: 100%;
     margin-bottom: 20px;
   }
-  .timer-title {
+  .timer-title, .summer-timer-title {
     font-size: 1.1rem;
     margin-bottom: 6px;
   }
   .timer-digits {
     gap: 6px;
   }
-  .timer-block {
+  .timer-block, .summer-timer-block {
     padding: 6px 8px;
     min-width: 48px;
   }
-  .timer-val {
+  .timer-val, .summer-timer-val {
     font-size: 1.4rem;
   }
-  .timer-lbl {
+  .timer-lbl, .summer-timer-lbl {
     font-size: 0.5rem;
   }
 
@@ -701,14 +739,14 @@ footer {
       </div>
     </div>
 
-    <div class="timer-container">
-      <div class="timer-title">Summer Exclusive Pack ☀️</div>
-      <div class="timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
+    <div class="summer-timer-container">
+      <div class="summer-timer-title">Summer Exclusive Pack ☀️</div>
+      <div class="summer-timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
       <div class="timer-digits">
-        <div class="timer-block"><div class="timer-val" id="v-days">04</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block"><div class="timer-val" id="v-hours">00</div><div class="timer-lbl">Hours</div></div>
-        <div class="timer-block"><div class="timer-val" id="v-mins">00</div><div class="timer-lbl">Mins</div></div>
-        <div class="timer-block"><div class="timer-val" id="v-secs">00</div><div class="timer-lbl">Secs</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">04</div><div class="summer-timer-lbl">Days</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">00</div><div class="summer-timer-lbl">Hours</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-mins">00</div><div class="summer-timer-lbl">Mins</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-secs">00</div><div class="summer-timer-lbl">Secs</div></div>
       </div>
     </div>
 
@@ -720,14 +758,9 @@ footer {
             Update 1 -
             <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
-          <div class="update-item">Summer Exclusive Pack & Timer on Home Page ☀️</div>
-          <div class="update-item">Clips Page & Coming Soon Notice 🔥</div>
-          <div class="update-item">App Install Prompt & Notification Toasts 📲</div>
-          <div class="update-item">Most Popular Video Stat (1M+) 📊</div>
-          <div class="update-item">Feedback Page with Formspree 💬</div>
-          <div class="update-item">Partial-Match Instant Search Bar 🔍</div>
-          <div class="update-item">Edit Packs & Tutorials Timers ⌛</div>
-          <div class="update-item">Website Rework & New Favicon 🛠️</div>
+          <div class="update-item">Summer Exclusive Pack ☀️</div>
+          <div class="update-item">Clips Page 🎬</div>
+          <div class="update-item">Feedback Page 💬</div>
         </div>
       </div>
 
@@ -890,7 +923,7 @@ footer {
 </footer>
 
 <script>
-/* 💬 ROTATING NOTIFICATION TOAST SYSTEM (Balanced frequency & fully on-screen) */
+/* 💬 ROTATING NOTIFICATION TOAST SYSTEM */
 const notifications = [
   { icon: '💬', title: 'DISCORD COMMUNITY', desc: 'New Discord Community Coming Soon!' },
   { icon: '💡', title: 'HAVE ANY IDEAS?', desc: 'Leave some feedback on the feedback page!' },
@@ -1101,7 +1134,7 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 30);
 
-/* ⏱️ FIXED DATE COUNTDOWN TIMERS (Synced across all devices) */
+/* ⏱️ FIXED DATE COUNTDOWN TIMERS */
 function setupFixedTimer(targetDateString, prefix) {
   const targetTime = new Date(targetDateString).getTime();
 
@@ -1141,7 +1174,6 @@ function setupFixedTimer(targetDateString, prefix) {
   setInterval(update, 1000);
 }
 
-// Fixed calendar target dates
 setupFixedTimer('2026-08-11T00:00:00', 'p');
 setupFixedTimer('2026-08-09T00:00:00', 't');
 setupFixedTimer('2026-08-08T00:00:00', 'v'); // 4-day summer exclusive timer
