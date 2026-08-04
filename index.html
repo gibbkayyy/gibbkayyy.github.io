@@ -202,29 +202,38 @@ main {
   transform: translateY(-2px);
 }
 
-/* COUNTDOWN TIMER BOX (Desktop Defaults) */
+/* SUMMER THEMED COUNTDOWN TIMER BOX */
 .timer-container {
-  background: rgba(15, 15, 15, 0.7);
-  border: 1px solid rgba(0, 255, 136, 0.3);
+  background: linear-gradient(135deg, rgba(20, 15, 10, 0.85), rgba(40, 25, 10, 0.85));
+  border: 1px solid rgba(255, 170, 0, 0.45);
   border-radius: 16px;
   padding: 20px 25px;
   margin: 0 auto 30px;
   max-width: 550px;
   text-align: center;
-  box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
+  box-shadow: 0 0 30px rgba(255, 140, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.1);
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.timer-container::before {
+  content: '🏖️ 🌊 ☀️';
+  position: absolute;
+  top: 8px; right: 12px;
+  font-size: 0.85rem;
+  opacity: 0.6;
 }
 .timer-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.6rem;
-  color: #00ff88;
+  color: #ffaa00;
   letter-spacing: 1.5px;
   margin-bottom: 4px;
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+  text-shadow: 0 0 12px rgba(255, 170, 0, 0.6);
 }
 .timer-subtitle-note {
   font-size: 0.75rem;
-  color: #aaa;
+  color: #ffdf80;
   margin-bottom: 12px;
   letter-spacing: 0.5px;
 }
@@ -232,8 +241,8 @@ main {
   display: flex; justify-content: center; gap: 15px;
 }
 .timer-block {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 255, 136, 0.2);
+  background: rgba(10, 5, 0, 0.7);
+  border: 1px solid rgba(255, 170, 0, 0.3);
   border-radius: 10px;
   padding: 10px 14px;
   min-width: 70px;
@@ -246,7 +255,7 @@ main {
 }
 .timer-lbl {
   font-size: 0.65rem;
-  color: #888;
+  color: #ffbb44;
   text-transform: uppercase;
   margin-top: 4px;
   letter-spacing: 1px;
@@ -283,7 +292,7 @@ main {
 
 /* VERTICAL UPDATES LIST WITH SCROLLER */
 .updates-scroller {
-  max-height: 190px;
+  max-height: 230px;
   overflow-y: auto;
   padding-right: 5px;
   display: flex;
@@ -692,23 +701,33 @@ footer {
       </div>
     </div>
 
+    <div class="timer-container">
+      <div class="timer-title">Summer Exclusive Pack ☀️</div>
+      <div class="timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
+      <div class="timer-digits">
+        <div class="timer-block"><div class="timer-val" id="v-days">04</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block"><div class="timer-val" id="v-hours">00</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block"><div class="timer-val" id="v-mins">00</div><div class="timer-lbl">Mins</div></div>
+        <div class="timer-block"><div class="timer-val" id="v-secs">00</div><div class="timer-lbl">Secs</div></div>
+      </div>
+    </div>
+
     <div class="home-grid">
       <div class="glass-panel">
         <span class="news-badge">LATEST UPDATES</span>
         <div class="updates-scroller">
           <div class="update-item-plain">
-            Platform Status Notice
+            Update 1 -
             <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
-          <div class="update-item">Search bar added 🔍</div>
-          <div class="update-item">Feedback page added 💬</div>
-          <div class="update-item">Website rework 🛠️</div>
-          <div class="update-item">New Edits 🎬</div>
-          <div class="update-item">Timers ⌛</div>
-          <div class="update-item">New Favicon 🖼️</div>
-          <div class="update-item">Removed Cursor ❌</div>
-          <div class="update-item">Bug Fixes 🐛</div>
-          <div class="update-item">Clips Page & Summer Vault Added ☀️</div>
+          <div class="update-item">Summer Exclusive Pack & Timer on Home Page ☀️</div>
+          <div class="update-item">Clips Page & Coming Soon Notice 🔥</div>
+          <div class="update-item">App Install Prompt & Notification Toasts 📲</div>
+          <div class="update-item">Most Popular Video Stat (1M+) 📊</div>
+          <div class="update-item">Feedback Page with Formspree 💬</div>
+          <div class="update-item">Partial-Match Instant Search Bar 🔍</div>
+          <div class="update-item">Edit Packs & Tutorials Timers ⌛</div>
+          <div class="update-item">Website Rework & New Favicon 🛠️</div>
         </div>
       </div>
 
@@ -812,17 +831,6 @@ footer {
       </div>
     </div>
 
-    <div class="timer-container" style="border-color: rgba(255, 120, 0, 0.4); box-shadow: 0 0 25px rgba(255, 120, 0, 0.2);">
-      <div class="timer-title" style="color: #ff9900; text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);">Summer Exclusive Pack</div>
-      <div class="timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
-      <div class="timer-digits">
-        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-days">04</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-hours">00</div><div class="timer-lbl">Hours</div></div>
-        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-mins">00</div><div class="timer-lbl">Mins</div></div>
-        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-secs">00</div><div class="timer-lbl">Secs</div></div>
-      </div>
-    </div>
-
     <div class="packs-grid">
       <div class="pack-card">
         <h3>Green Screen Pack</h3>
@@ -899,18 +907,15 @@ function showDiscordToast() {
   const descElem = document.getElementById('toastDesc');
 
   if (toast) {
-    // Set current notification content
     const current = notifications[currentToastIndex];
     iconElem.innerText = current.icon;
     titleElem.innerText = current.title;
     descElem.innerText = current.desc;
 
-    // Advance to next notification for next cycle
     currentToastIndex = (currentToastIndex + 1) % notifications.length;
 
     toast.classList.add('show');
     
-    // Automatically hide after 5 seconds
     clearTimeout(discordTimer);
     discordTimer = setTimeout(() => {
       closeDiscordToast();
@@ -925,7 +930,6 @@ function closeDiscordToast() {
   }
 }
 
-// First prompt after 6 seconds, then repeat every 45 seconds so it isn't too frequent
 setTimeout(() => {
   showDiscordToast();
   setInterval(() => {
@@ -944,7 +948,6 @@ function switchTab(tabId) {
     targetTab.classList.add('active-page');
   }
   
-  // Highlight matching navbar button if available
   document.querySelectorAll('.tab-btn').forEach(btn => {
     const attr = btn.getAttribute('onclick');
     if(attr && attr.includes(tabId)) {
@@ -961,13 +964,11 @@ function switchTab(tabId) {
 function handleSearch(event) {
   const query = event.target.value.toLowerCase().trim();
   
-  // If search is cleared out, reset all edits viewable
   if (!query) {
     document.querySelectorAll('.edit-card').forEach(card => card.style.display = 'block');
     return;
   }
 
-  // Check if query matches tab names partially or fully
   if ('home'.includes(query)) { switchTab('home'); return; }
   if ('edits'.includes(query)) { switchTab('edits'); return; }
   if ('tutorials'.includes(query) || 'tutorial'.includes(query)) { switchTab('tutorials'); return; }
@@ -975,7 +976,6 @@ function handleSearch(event) {
   if ('clips'.includes(query)) { switchTab('clips'); return; }
   if ('feedback'.includes(query)) { switchTab('feedback'); return; }
 
-  // Filter edit cards live while typing with partial character matching
   document.querySelectorAll('.edit-card').forEach(card => {
     let title = card.getAttribute('data-title');
     if (title && title.includes(query)) {
@@ -1014,11 +1014,9 @@ async function submitFeedback(e) {
     });
 
     if (response.ok) {
-      // Clear input fields
       nameInput.value = '';
       msgInput.value = '';
 
-      // Show success notification box
       successBox.style.display = 'block';
       setTimeout(() => {
         successBox.style.display = 'none';
