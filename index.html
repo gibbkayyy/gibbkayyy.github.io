@@ -275,8 +275,11 @@ main {
   letter-spacing: 1px;
 }
 
-/* VERTICAL UPDATES LIST */
-.updates-list {
+/* VERTICAL UPDATES LIST WITH SCROLLER */
+.updates-scroller {
+  max-height: 190px;
+  overflow-y: auto;
+  padding-right: 5px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -600,12 +603,16 @@ footer {
     <div class="home-grid">
       <div class="glass-panel">
         <span class="news-badge">LATEST UPDATES</span>
-        <div class="updates-list">
-          <div class="update-item">Search Bar & Feedback Page added 🚀</div>
+        <div class="updates-scroller">
+          <div class="update-item">Search bar added 🔍</div>
+          <div class="update-item">Feedback page added 💬</div>
           <div class="update-item">Website rework 🛠️</div>
           <div class="update-item">New Edits 🎬</div>
           <div class="update-item">Timers ⌛</div>
           <div class="update-item">New Favicon 🖼️</div>
+          <div class="update-item">Removed Cursor ❌</div>
+          <div class="update-item" id="platformUpdateNotice">Running on site 🌐</div>
+          <div class="update-item">Bug Fixes 🐛</div>
         </div>
       </div>
 
@@ -714,23 +721,23 @@ footer {
 
   <section id="feedback" class="page-tab">
     <div class="section-header">
-      <h2>FEEDBACK WALL</h2>
+      <h2>FEEDBACK</h2>
       <div class="line"></div>
     </div>
 
     <div class="feedback-container glass-panel">
       <p style="text-align:center; color:#888; margin-bottom:20px; font-size:0.9rem;">
-        Drop anonymous feedback, suggestions, or hype messages below! 👇
+        Drop feedback, suggestions, or hype messages below! 👇
       </p>
       
       <form class="feedback-form" onsubmit="submitFeedback(event)">
-        <input type="text" class="feedback-input" id="feedbackName" placeholder="Your Name (Optional, leave blank for Anonymous)">
+        <input type="text" class="feedback-input" id="feedbackName" placeholder="Your Name (Optional)">
         <textarea class="feedback-textarea" id="feedbackMsg" placeholder="Type your feedback here..." required></textarea>
         <button type="submit" class="btn">Send Feedback 🚀</button>
       </form>
 
       <div id="feedbackSuccess" class="feedback-success">
-        ✨ Success! Your feedback has been sent anonymously. Thanks for helping improve the site!
+        ✨ Success! Your feedback has been sent. Thanks for helping improve the site!
       </div>
     </div>
   </section>
@@ -756,6 +763,13 @@ function switchTab(tabId) {
     }
   });
 
+  // Reset edit card visibility whenever any tab is clicked or switched
+  document.querySelectorAll('.edit-card').forEach(card => {
+    card.style.display = 'block';
+  });
+  const searchInput = document.getElementById('globalSearch');
+  if (searchInput) searchInput.value = '';
+
   if (tabId === 'home') {
     runStatCounter();
   }
@@ -764,7 +778,12 @@ function switchTab(tabId) {
 /* 🔍 INSTANT SEARCH BAR SYSTEM */
 function handleSearch(event) {
   const query = event.target.value.toLowerCase().trim();
-  if (!query) return;
+  
+  // If search is cleared out, reset all edits viewable
+  if (!query) {
+    document.querySelectorAll('.edit-card').forEach(card => card.style.display = 'block');
+    return;
+  }
 
   // Check if query matches tab names
   if ('home'.includes(query)) { switchTab('home'); return; }
@@ -941,9 +960,15 @@ document.querySelectorAll('.btn, .tab-btn, .edit-card, .pack-card, .stat-card').
 /* 📲 APP INSTALL PROMPT & AUTO-HIDE WHEN INSTALLED */
 let deferredPrompt;
 const installBtn = document.getElementById('installAppBtn');
+const platformNotice = document.getElementById('platformUpdateNotice');
 
-if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+if (isAppMode) {
   if (installBtn) installBtn.style.display = 'none';
+  if (platformNotice) platformNotice.innerText = 'Running on app 📱';
+} else {
+  if (platformNotice) platformNotice.innerText = 'Running on site 🌐';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -953,6 +978,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.style.display = 'none';
+  if (platformNotice) platformNotice.innerText = 'Running on app 📱';
   deferredPrompt = null;
 });
 
@@ -965,6 +991,7 @@ function triggerInstall() {
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
       if (installBtn) installBtn.style.display = 'none';
+      if (platformNotice) platformNotice.innerText = 'Running on app 📱';
       if (typeof gtag === 'function') {
         gtag('event', 'app_installed', {
           'event_category': 'PWA',
