@@ -293,6 +293,14 @@ main {
   color: #ccc;
   display: block;
 }
+.update-item-plain {
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #ccc;
+  display: block;
+}
 .update-desc {
   font-size: 0.75rem;
   color: #888;
@@ -609,9 +617,9 @@ footer {
       <div class="glass-panel">
         <span class="news-badge">LATEST UPDATES</span>
         <div class="updates-scroller">
-          <div class="update-item">
+          <div class="update-item-plain">
             Update 1
-            <div class="update-desc" id="platformUpdateNotice">Site will keep updating for another 24 hours. After that, it will be a new update.</div>
+            <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
           <div class="update-item">Search bar added 🔍</div>
           <div class="update-item">Feedback page added 💬</div>
@@ -762,11 +770,15 @@ function switchTab(tabId) {
   document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active-page'));
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   
-  document.getElementById(tabId).classList.add('active-page');
+  const targetTab = document.getElementById(tabId);
+  if (targetTab) {
+    targetTab.classList.add('active-page');
+  }
   
   // Highlight matching navbar button if available
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    if(btn.getAttribute('onclick') && btn.getAttribute('onclick'].includes(tabId)) {
+    const attr = btn.getAttribute('onclick');
+    if(attr && attr.includes(tabId)) {
       btn.classList.add('active');
     }
   });
@@ -776,7 +788,7 @@ function switchTab(tabId) {
   }
 }
 
-/* 🔍 INSTANT SEARCH BAR SYSTEM (Fixed using oninput to prevent clearing/forcing tabs) */
+/* 🔍 INSTANT SEARCH BAR SYSTEM */
 function handleSearch(event) {
   const query = event.target.value.toLowerCase().trim();
   
@@ -786,17 +798,17 @@ function handleSearch(event) {
     return;
   }
 
-  // Check if query matches tab names
-  if ('home'.includes(query)) { switchTab('home'); return; }
-  if ('edits'.includes(query)) { switchTab('edits'); return; }
-  if ('tutorials'.includes(query) || 'tutorial'.includes(query)) { switchTab('tutorials'); return; }
-  if ('packs'.includes(query) || 'edit packs'.includes(query)) { switchTab('packs'); return; }
-  if ('feedback'.includes(query)) { switchTab('feedback'); return; }
+  // Check if query matches tab names exactly
+  if (query === 'home') { switchTab('home'); return; }
+  if (query === 'edits') { switchTab('edits'); return; }
+  if (query === 'tutorials' || query === 'tutorial') { switchTab('tutorials'); return; }
+  if (query === 'packs' || query === 'edit packs') { switchTab('packs'); return; }
+  if (query === 'feedback') { switchTab('feedback'); return; }
 
-  // Filter edit cards without forcing page switches away while typing
+  // Filter edit cards live while typing
   document.querySelectorAll('.edit-card').forEach(card => {
     let title = card.getAttribute('data-title');
-    if (title.includes(query)) {
+    if (title && title.includes(query)) {
       card.style.display = 'block';
     } else {
       card.style.display = 'none';
@@ -897,10 +909,14 @@ function setupFixedTimer(targetDateString, prefix) {
     const diff = targetTime - now;
 
     if (diff <= 0) {
-      document.getElementById(prefix + '-days').innerText = "00";
-      document.getElementById(prefix + '-hours').innerText = "00";
-      document.getElementById(prefix + '-mins').innerText = "00";
-      document.getElementById(prefix + '-secs').innerText = "00";
+      const dElem = document.getElementById(prefix + '-days');
+      const hElem = document.getElementById(prefix + '-hours');
+      const mElem = document.getElementById(prefix + '-mins');
+      const sElem = document.getElementById(prefix + '-secs');
+      if(dElem) dElem.innerText = "00";
+      if(hElem) hElem.innerText = "00";
+      if(mElem) mElem.innerText = "00";
+      if(sElem) sElem.innerText = "00";
       return;
     }
 
@@ -909,10 +925,15 @@ function setupFixedTimer(targetDateString, prefix) {
     const m = Math.floor((diff / 1000 / 60) % 60);
     const s = Math.floor((diff / 1000) % 60);
 
-    document.getElementById(prefix + '-days').innerText = String(d).padStart(2, '0');
-    document.getElementById(prefix + '-hours').innerText = String(h).padStart(2, '0');
-    document.getElementById(prefix + '-mins').innerText = String(m).padStart(2, '0');
-    document.getElementById(prefix + '-secs').innerText = String(s).padStart(2, '0');
+    const dElem = document.getElementById(prefix + '-days');
+    const hElem = document.getElementById(prefix + '-hours');
+    const mElem = document.getElementById(prefix + '-mins');
+    const sElem = document.getElementById(prefix + '-secs');
+
+    if(dElem) dElem.innerText = String(d).padStart(2, '0');
+    if(hElem) hElem.innerText = String(h).padStart(2, '0');
+    if(mElem) mElem.innerText = String(m).padStart(2, '0');
+    if(sElem) sElem.innerText = String(s).padStart(2, '0');
   }
 
   update();
@@ -961,9 +982,9 @@ const isAppMode = window.matchMedia('(display-mode: standalone)').matches || win
 
 if (isAppMode) {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'App will keep updating for another 24 hours. After that, it will be a new update.';
+  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
 } else {
-  if (platformNotice) platformNotice.innerText = 'Site will keep updating for another 24 hours. After that, it will be a new update.';
+  if (platformNotice) platformNotice.innerText = 'The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -973,7 +994,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'App will keep updating for another 24 hours. After that, it will be a new update.';
+  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
   deferredPrompt = null;
 });
 
@@ -986,7 +1007,7 @@ function triggerInstall() {
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
       if (installBtn) installBtn.style.display = 'none';
-      if (platformNotice) platformNotice.innerText = 'App will keep updating for another 24 hours. After that, it will be a new update.';
+      if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
       if (typeof gtag === 'function') {
         gtag('event', 'app_installed', {
           'event_category': 'PWA',
