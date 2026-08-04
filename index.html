@@ -508,6 +508,52 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* DISCORD NOTIFICATION POPUP (Bottom Left) */
+.discord-toast {
+  position: fixed;
+  bottom: 25px;
+  left: -350px; /* Hidden off-screen to the left */
+  z-index: 9998;
+  background: rgba(15, 15, 15, 0.9);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  backdrop-filter: blur(12px);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(0, 255, 136, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.discord-toast.show {
+  transform: translateX(375px); /* Slides into view */
+}
+.discord-icon {
+  font-size: 1.8rem;
+}
+.discord-text h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: #00ff88;
+  letter-spacing: 0.5px;
+}
+.discord-text p {
+  font-size: 0.8rem;
+  color: #ccc;
+}
+.discord-close {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  padding: 2px 6px;
+}
+.discord-close:hover {
+  color: #fff;
+}
+
 
 /* ==========================================
    📱 MOBILE RESPONSIVE OVERRIDES (Phones Only)
@@ -560,6 +606,16 @@ footer {
   .more-edits-banner {
     font-size: 1.5rem;
   }
+
+  /* Adjust mobile toast positioning */
+  .discord-toast {
+    left: -320px;
+    bottom: 15px;
+    padding: 12px 15px;
+  }
+  .discord-toast.show {
+    transform: translateX(335px);
+  }
 }
 </style>
 </head>
@@ -573,6 +629,15 @@ footer {
 </div>
 
 <div class="bg-overlay"></div>
+
+<div id="discordToast" class="discord-toast">
+  <div class="discord-icon">💬</div>
+  <div class="discord-text">
+    <h4>DISCORD COMMUNITY</h4>
+    <p>New Discord Community Coming Soon!</p>
+  </div>
+  <button class="discord-close" onclick="closeDiscordToast()">✕</button>
+</div>
 
 <header>
   <div class="brand">GIBBKAYYY</div>
@@ -765,6 +830,38 @@ footer {
 </footer>
 
 <script>
+/* 💬 DISCORD TOAST NOTIFICATION SYSTEM */
+let discordTimer;
+
+function showDiscordToast() {
+  const toast = document.getElementById('discordToast');
+  if (toast) {
+    toast.classList.add('show');
+    
+    // Automatically slide back in after 6 seconds if not closed manually
+    clearTimeout(discordTimer);
+    discordTimer = setTimeout(() => {
+      closeDiscordToast();
+    }, 6000);
+  }
+}
+
+function closeDiscordToast() {
+  const toast = document.getElementById('discordToast');
+  if (toast) {
+    toast.classList.remove('show');
+  }
+}
+
+// Trigger first notification after 4 seconds, then repeat every 30 seconds
+setTimeout(() => {
+  showDiscordToast();
+  setInterval(() => {
+    showDiscordToast();
+  }, 30000);
+}, 4000);
+
+
 /* 🔄 TAB SWITCHING SYSTEM */
 function switchTab(tabId) {
   document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active-page'));
