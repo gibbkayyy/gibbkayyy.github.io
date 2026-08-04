@@ -180,7 +180,7 @@ main {
   transform: translateY(-2px);
 }
 
-/* COUNTDOWN TIMER BOX */
+/* COUNTDOWN TIMER BOX (Desktop Defaults) */
 .timer-container {
   background: rgba(15, 15, 15, 0.7);
   border: 1px solid rgba(0, 255, 136, 0.3);
@@ -443,6 +443,30 @@ footer {
   .hero-title { font-size: 4.5rem; }
   
   .home-grid { grid-template-columns: 1fr; }
+
+  /* Scale Down Timer Container & Blocks for Mobile Only */
+  .timer-container {
+    padding: 12px 15px;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .timer-title {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  .timer-digits {
+    gap: 6px;
+  }
+  .timer-block {
+    padding: 6px 8px;
+    min-width: 48px;
+  }
+  .timer-val {
+    font-size: 1.4rem;
+  }
+  .timer-lbl {
+    font-size: 0.5rem;
+  }
 
   /* Force Edits to 2 columns on mobile */
   .edits-grid {
