@@ -1,0 +1,20 @@
+{
+  "name": "Gibbkayyy",
+  "short_name": "Gibbkayyy",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#00ff88",
+  "icons": [
+    {
+      "src": "thorfavicon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "thorfavicon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
