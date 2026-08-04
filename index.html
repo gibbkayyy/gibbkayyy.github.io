@@ -811,10 +811,10 @@ footer {
         Drop feedback, suggestions, or hype messages below! 👇
       </p>
       
-      <form class="feedback-form" onsubmit="submitFeedback(event)">
-        <input type="text" class="feedback-input" id="feedbackName" placeholder="Your Name (Optional)">
-        <textarea class="feedback-textarea" id="feedbackMsg" placeholder="Type your feedback here..." required></textarea>
-        <button type="submit" class="btn">Send Feedback 🚀</button>
+      <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
+        <input type="text" class="feedback-input" id="feedbackName" name="name" placeholder="Your Name (Optional)">
+        <textarea class="feedback-textarea" id="feedbackMsg" name="message" placeholder="Type your feedback here..." required></textarea>
+        <button type="submit" class="btn" id="feedbackSubmitBtn">Send Feedback 🚀</button>
       </form>
 
       <div id="feedbackSuccess" class="feedback-success">
@@ -913,23 +913,52 @@ function handleSearch(event) {
   });
 }
 
-/* 📥 FEEDBACK FORM SUBMISSION HANDLER */
-function submitFeedback(e) {
+/* 📥 FORMSPREE FEEDBACK AJAX SUBMISSION HANDLER */
+async function submitFeedback(e) {
   e.preventDefault();
-  const name = document.getElementById('feedbackName').value.trim() || 'Anonymous';
-  const msg = document.getElementById('feedbackMsg').value.trim();
-
-  // Clear input fields
-  document.getElementById('feedbackName').value = '';
-  document.getElementById('feedbackMsg').value = '';
-
-  // Show success notification box
-  const successBox = document.getElementById('feedbackSuccess');
-  successBox.style.display = 'block';
   
-  setTimeout(() => {
-    successBox.style.display = 'none';
-  }, 5000);
+  const nameInput = document.getElementById('feedbackName');
+  const msgInput = document.getElementById('feedbackMsg');
+  const submitBtn = document.getElementById('feedbackSubmitBtn');
+  const successBox = document.getElementById('feedbackSuccess');
+
+  const formData = {
+    name: nameInput.value.trim() || 'Anonymous',
+    message: msgInput.value.trim()
+  };
+
+  submitBtn.disabled = true;
+  submitBtn.innerText = 'Sending... ⏳';
+
+  try {
+    const response = await fetch('https://formspree.io/f/xoeaabab', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+      // Clear input fields
+      nameInput.value = '';
+      msgInput.value = '';
+
+      // Show success notification box
+      successBox.style.display = 'block';
+      setTimeout(() => {
+        successBox.style.display = 'none';
+      }, 5000);
+    } else {
+      alert('Oops! There was a problem submitting your feedback. Please try again.');
+    }
+  } catch (error) {
+    alert('Network error. Please check your connection and try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerText = 'Send Feedback 🚀';
+  }
 }
 
 /* 📊 STAT COUNTER ANIMATION */
