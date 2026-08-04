@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DB0LPTDGD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0DB0LPTDGD');
+</script>
+
 <meta charset="UTF-8">
 <title>Gibbkayyy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/jpeg" href="thorfavicon.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
@@ -161,6 +171,7 @@ main {
   font-size: 0.9rem;
   background: rgba(0, 255, 136, 0.03);
   transition: 0.25s;
+  cursor: pointer;
 }
 .btn:hover {
   background: #00ff88;
@@ -425,7 +436,7 @@ footer {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  header { flex-direction: column; gap: 15px; }
+  header { flex-direction: column; gap: 12px; }
   .hero-title { font-size: 4.5rem; }
 }
 </style>
@@ -449,6 +460,9 @@ footer {
     <button class="tab-btn" onclick="switchTab('tutorials')">Tutorials</button>
     <button class="tab-btn" onclick="switchTab('packs')">Edit Packs</button>
   </nav>
+  <button id="installAppBtn" class="btn" style="padding: 6px 14px; font-size: 0.8rem;" onclick="triggerInstall()">
+    📲 INSTALL APP
+  </button>
 </header>
 
 <main>
@@ -742,6 +756,35 @@ function playHoverSound() {
 document.querySelectorAll('.btn, .tab-btn, .edit-card, .pack-card, .stat-card').forEach(item => {
   item.addEventListener('mouseenter', playHoverSound);
 });
+
+/* 📲 APP INSTALL PROMPT & GOOGLE ANALYTICS EVENT TRACKING */
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+function triggerInstall() {
+  if (!deferredPrompt) {
+    alert("To install this app:\n\n• On iPhone (Safari): Tap Share -> 'Add to Home Screen'\n• On Android: Tap top-right 3 dots -> 'Install App'");
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === 'accepted') {
+      console.log('App Installed Successfully');
+      // Sends custom installation event to Google Analytics
+      if (typeof gtag === 'function') {
+        gtag('event', 'app_installed', {
+          'event_category': 'PWA',
+          'event_label': 'Gibbkayyy App Installed'
+        });
+      }
+    }
+    deferredPrompt = null;
+  });
+}
 </script>
 
 </body>
