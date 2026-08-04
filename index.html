@@ -302,9 +302,10 @@ main {
   display: block;
 }
 .update-desc {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 3px;
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 4px;
+  line-height: 1.4;
 }
 
 /* Stats Layout */
@@ -499,6 +500,26 @@ main {
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
 }
 
+/* CLIPS TAB */
+.coming-soon-container {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 600px;
+  margin: 40px auto;
+}
+.coming-soon-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem;
+  color: #00ff88;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+  margin-bottom: 15px;
+}
+.coming-soon-sub {
+  color: #aaa;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 /* Footer */
 footer {
   text-align: center;
@@ -508,13 +529,14 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* DISCORD NOTIFICATION POPUP (Bottom Left) */
+/* NOTIFICATION POPUP (Bottom Left - Fixed completely inside screen boundary) */
 .discord-toast {
   position: fixed;
   bottom: 25px;
-  left: -350px; /* Hidden off-screen to the left */
+  left: 20px;
+  transform: translateX(-120%); /* Completely hidden off-screen to the left */
   z-index: 9998;
-  background: rgba(15, 15, 15, 0.9);
+  background: rgba(15, 15, 15, 0.95);
   border: 1px solid rgba(0, 255, 136, 0.4);
   backdrop-filter: blur(12px);
   padding: 16px 20px;
@@ -523,13 +545,16 @@ footer {
   display: flex;
   align-items: center;
   gap: 15px;
+  max-width: 340px;
+  width: calc(100vw - 40px);
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .discord-toast.show {
-  transform: translateX(375px); /* Slides into view */
+  transform: translateX(0); /* Slides fully into view comfortably inside screen */
 }
 .discord-icon {
   font-size: 1.8rem;
+  flex-shrink: 0;
 }
 .discord-text h4 {
   font-family: 'Bebas Neue', sans-serif;
@@ -549,6 +574,8 @@ footer {
   cursor: pointer;
   transition: 0.2s;
   padding: 2px 6px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 .discord-close:hover {
   color: #fff;
@@ -606,16 +633,6 @@ footer {
   .more-edits-banner {
     font-size: 1.5rem;
   }
-
-  /* Adjust mobile toast positioning */
-  .discord-toast {
-    left: -320px;
-    bottom: 15px;
-    padding: 12px 15px;
-  }
-  .discord-toast.show {
-    transform: translateX(335px);
-  }
 }
 </style>
 </head>
@@ -631,10 +648,10 @@ footer {
 <div class="bg-overlay"></div>
 
 <div id="discordToast" class="discord-toast">
-  <div class="discord-icon">💬</div>
+  <div class="discord-icon" id="toastIcon">💬</div>
   <div class="discord-text">
-    <h4>DISCORD COMMUNITY</h4>
-    <p>New Discord Community Coming Soon!</p>
+    <h4 id="toastTitle">DISCORD COMMUNITY</h4>
+    <p id="toastDesc">New Discord Community Coming Soon!</p>
   </div>
   <button class="discord-close" onclick="closeDiscordToast()">✕</button>
 </div>
@@ -647,6 +664,7 @@ footer {
       <button class="tab-btn" onclick="switchTab('edits')">Edits</button>
       <button class="tab-btn" onclick="switchTab('tutorials')">Tutorials</button>
       <button class="tab-btn" onclick="switchTab('packs')">Edit Packs</button>
+      <button class="tab-btn" onclick="switchTab('clips')">Clips</button>
       <button class="tab-btn" onclick="switchTab('feedback')">Feedback</button>
     </nav>
     <input type="text" id="globalSearch" class="header-search" placeholder="🔍 Search..." oninput="handleSearch(event)">
@@ -666,16 +684,6 @@ footer {
         <a class="btn" href="https://www.youtube.com/@gibbkayyy" target="_blank">YouTube Channel</a>
         <a class="btn" href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok Account</a>
       </div>
-
-      <div class="timer-container">
-        <div class="timer-title">NEW EDITING PACK WHEN TIMER HITS 0! 🔥</div>
-        <div class="timer-digits">
-          <div class="timer-block"><div class="timer-val" id="p-days">07</div><div class="timer-lbl">Days</div></div>
-          <div class="timer-block"><div class="timer-val" id="p-hours">00</div><div class="timer-lbl">Hours</div></div>
-          <div class="timer-block"><div class="timer-val" id="p-mins">00</div><div class="timer-lbl">Mins</div></div>
-          <div class="timer-block"><div class="timer-val" id="p-secs">00</div><div class="timer-lbl">Secs</div></div>
-        </div>
-      </div>
     </div>
 
     <div class="home-grid">
@@ -683,8 +691,8 @@ footer {
         <span class="news-badge">LATEST UPDATES</span>
         <div class="updates-scroller">
           <div class="update-item-plain">
-            Update 1
-            <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
+            Platform Status Notice
+            <div class="update-desc" id="platformUpdateNotice">The Site will continue receiving active updates and improvements over the next 24 hours. After this initial rollout period concludes, a scheduled countdown timer will govern all future update drops.</div>
           </div>
           <div class="update-item">Search bar added 🔍</div>
           <div class="update-item">Feedback page added 💬</div>
@@ -717,6 +725,10 @@ footer {
         <div class="stat-card">
           <h3 data-target="20000">0</h3>
           <p>TikTok Likes</p>
+        </div>
+        <div class="stat-card">
+          <h3 data-target="1000000">0</h3>
+          <p>Most popular video</p>
         </div>
       </div>
     </div>
@@ -783,6 +795,26 @@ footer {
       <div class="line"></div>
     </div>
 
+    <div class="timer-container">
+      <div class="timer-title">NEW EDITING PACK WHEN TIMER HITS 0! 🔥</div>
+      <div class="timer-digits">
+        <div class="timer-block"><div class="timer-val" id="p-days">07</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block"><div class="timer-val" id="p-hours">00</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block"><div class="timer-val" id="p-mins">00</div><div class="timer-lbl">Mins</div></div>
+        <div class="timer-block"><div class="timer-val" id="p-secs">00</div><div class="timer-lbl">Secs</div></div>
+      </div>
+    </div>
+
+    <div class="timer-container" style="border-color: rgba(255, 120, 0, 0.4); box-shadow: 0 0 25px rgba(255, 120, 0, 0.2);">
+      <div class="timer-title" style="color: #ff9900; text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);">SUMMER EXCLUSIVE PACK VAULT ☀️</div>
+      <div class="timer-digits">
+        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-days">03</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-hours">00</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-mins">00</div><div class="timer-lbl">Mins</div></div>
+        <div class="timer-block" style="border-color: rgba(255, 120, 0, 0.3);"><div class="timer-val" id="v-secs">00</div><div class="timer-lbl">Secs</div></div>
+      </div>
+    </div>
+
     <div class="packs-grid">
       <div class="pack-card">
         <h3>Green Screen Pack</h3>
@@ -795,8 +827,20 @@ footer {
         <h3>Overlay Pack</h3>
         <p>Free overlays to improve edits</p>
         <div class="pack-size">File Size: SOON</div>
-        <a class="btn" style="pointer-events:none; opacity:0.6;">Releasing at 500 subscribers</a>
+        <a class="btn" style="pointer-events:none; opacity:0.6;">Releasing when the timer ends!</a>
       </div>
+    </div>
+  </section>
+
+  <section id="clips" class="page-tab">
+    <div class="section-header">
+      <h2>CLIPS</h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="glass-panel coming-soon-container">
+      <h3 class="coming-soon-title">COMING SOON 🔥</h3>
+      <p class="coming-soon-sub">If you want any specific clips, ask in the feedback page!</p>
     </div>
   </section>
 
@@ -808,7 +852,7 @@ footer {
 
     <div class="feedback-container glass-panel">
       <p style="text-align:center; color:#888; margin-bottom:20px; font-size:0.9rem;">
-        Drop feedback, suggestions, or hype messages below! 👇
+        Drop feedback and suggestions below!
       </p>
       
       <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
@@ -830,19 +874,39 @@ footer {
 </footer>
 
 <script>
-/* 💬 DISCORD TOAST NOTIFICATION SYSTEM */
+/* 💬 ROTATING NOTIFICATION TOAST SYSTEM (Balanced frequency & fully on-screen) */
+const notifications = [
+  { icon: '💬', title: 'DISCORD COMMUNITY', desc: 'New Discord Community Coming Soon!' },
+  { icon: '💡', title: 'HAVE ANY IDEAS?', desc: 'Leave some feedback on the feedback page!' },
+  { icon: '📲', title: 'INSTALL APP', desc: 'Want to access the site easier? Install the app for free!' }
+];
+
+let currentToastIndex = 0;
 let discordTimer;
 
 function showDiscordToast() {
   const toast = document.getElementById('discordToast');
+  const iconElem = document.getElementById('toastIcon');
+  const titleElem = document.getElementById('toastTitle');
+  const descElem = document.getElementById('toastDesc');
+
   if (toast) {
+    // Set current notification content
+    const current = notifications[currentToastIndex];
+    iconElem.innerText = current.icon;
+    titleElem.innerText = current.title;
+    descElem.innerText = current.desc;
+
+    // Advance to next notification for next cycle
+    currentToastIndex = (currentToastIndex + 1) % notifications.length;
+
     toast.classList.add('show');
     
-    // Automatically slide back in after 6 seconds if not closed manually
+    // Automatically hide after 5 seconds
     clearTimeout(discordTimer);
     discordTimer = setTimeout(() => {
       closeDiscordToast();
-    }, 6000);
+    }, 5000);
   }
 }
 
@@ -853,13 +917,13 @@ function closeDiscordToast() {
   }
 }
 
-// Trigger first notification after 4 seconds, then repeat every 30 seconds
+// First prompt after 6 seconds, then repeat every 45 seconds so it isn't too frequent
 setTimeout(() => {
   showDiscordToast();
   setInterval(() => {
     showDiscordToast();
-  }, 30000);
-}, 4000);
+  }, 45000);
+}, 6000);
 
 
 /* 🔄 TAB SWITCHING SYSTEM */
@@ -885,7 +949,7 @@ function switchTab(tabId) {
   }
 }
 
-/* 🔍 INSTANT SEARCH BAR SYSTEM */
+/* 🔍 PARTIAL-MATCH INSTANT SEARCH BAR SYSTEM */
 function handleSearch(event) {
   const query = event.target.value.toLowerCase().trim();
   
@@ -895,14 +959,15 @@ function handleSearch(event) {
     return;
   }
 
-  // Check if query matches tab names exactly
-  if (query === 'home') { switchTab('home'); return; }
-  if (query === 'edits') { switchTab('edits'); return; }
-  if (query === 'tutorials' || query === 'tutorial') { switchTab('tutorials'); return; }
-  if (query === 'packs' || query === 'edit packs') { switchTab('packs'); return; }
-  if (query === 'feedback') { switchTab('feedback'); return; }
+  // Check if query matches tab names partially or fully
+  if ('home'.includes(query)) { switchTab('home'); return; }
+  if ('edits'.includes(query)) { switchTab('edits'); return; }
+  if ('tutorials'.includes(query) || 'tutorial'.includes(query)) { switchTab('tutorials'); return; }
+  if ('packs'.includes(query) || 'edit packs'.includes(query)) { switchTab('packs'); return; }
+  if ('clips'.includes(query)) { switchTab('clips'); return; }
+  if ('feedback'.includes(query)) { switchTab('feedback'); return; }
 
-  // Filter edit cards live while typing
+  // Filter edit cards live while typing with partial character matching
   document.querySelectorAll('.edit-card').forEach(card => {
     let title = card.getAttribute('data-title');
     if (title && title.includes(query)) {
@@ -975,14 +1040,18 @@ function runStatCounter() {
     let timer = setInterval(() => {
       current += step;
       if (current >= target) {
-        if (target >= 1000) {
+        if (target >= 1000000) {
+          el.innerText = (target / 1000000).toFixed(0) + "M+";
+        } else if (target >= 1000) {
           el.innerText = (target / 1000).toFixed(target >= 10000 ? 0 : 1) + "K+";
         } else {
           el.innerText = target + "+";
         }
         clearInterval(timer);
       } else {
-        if (target >= 1000) {
+        if (target >= 1000000) {
+          el.innerText = (current / 1000000).toFixed(1) + "M+";
+        } else if (target >= 1000) {
           el.innerText = (current / 1000).toFixed(1) + "K+";
         } else {
           el.innerText = Math.floor(current) + "+";
@@ -1069,6 +1138,7 @@ function setupFixedTimer(targetDateString, prefix) {
 // Fixed calendar target dates
 setupFixedTimer('2026-08-11T00:00:00', 'p');
 setupFixedTimer('2026-08-09T00:00:00', 't');
+setupFixedTimer('2026-08-07T00:00:00', 'v'); // 3-day summer vault timer
 
 /* 🔊 SYNTH HOVER AUDIO EFFECT */
 let audioCtx;
@@ -1108,9 +1178,9 @@ const isAppMode = window.matchMedia('(display-mode: standalone)').matches || win
 
 if (isAppMode) {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
+  if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
 } else {
-  if (platformNotice) platformNotice.innerText = 'The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.';
+  if (platformNotice) platformNotice.innerText = 'The Site will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -1120,7 +1190,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', () => {
   if (installBtn) installBtn.style.display = 'none';
-  if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
+  if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
   deferredPrompt = null;
 });
 
@@ -1133,7 +1203,7 @@ function triggerInstall() {
   deferredPrompt.userChoice.then((choiceResult) => {
     if (choiceResult.outcome === 'accepted') {
       if (installBtn) installBtn.style.display = 'none';
-      if (platformNotice) platformNotice.innerText = 'The App will keep updating for another 24 hours. After that, there will be a timer for a new update.';
+      if (platformNotice) platformNotice.innerText = 'The App will continue receiving active updates and improvements over the next 24 hours. After this initial rollout concludes, a scheduled countdown timer will govern all future update drops.';
       if (typeof gtag === 'function') {
         gtag('event', 'app_installed', {
           'event_category': 'PWA',
