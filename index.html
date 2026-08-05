@@ -316,10 +316,10 @@ main {
   padding: 25px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.news-header-row {
+.news-header-wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 15px;
 }
 .news-badge {
@@ -343,7 +343,6 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
-  margin-bottom: 15px;
 }
 .upd-btn:hover {
   background: #00ff88;
@@ -382,12 +381,6 @@ main {
   color: #ccc;
   display: block;
   scroll-margin-top: 10px;
-}
-.update-desc {
-  font-size: 0.8rem;
-  color: #aaa;
-  margin-top: 6px;
-  line-height: 1.5;
 }
 
 /* Stats Layout */
@@ -781,14 +774,13 @@ footer {
 
     <div class="home-grid">
       <div class="glass-panel">
-        <div class="news-header-row">
+        <div class="news-header-wrapper">
+          <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
           <span class="news-badge">LATEST UPDATES</span>
         </div>
-        <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
         <div class="updates-scroller">
           <div class="update-item-plain" id="upd1">
             Update 1 - 4/8/26
-            <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
           <div class="update-item">Summer Exclusive Pack ☀️</div>
           <div class="update-item">Clips Page 🎬</div>
