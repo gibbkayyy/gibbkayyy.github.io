@@ -16,7 +16,7 @@
 
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/jpeg" href="thorfavicon.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -166,8 +166,8 @@ main {
   padding: 30px 20px 20px;
 }
 .hero-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 6.5rem;
+  font-family: 'Fredoka One', cursive, sans-serif;
+  font-size: 5rem;
   line-height: 1;
   color: #fff;
   text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
@@ -337,12 +337,15 @@ main {
   background: rgba(0, 255, 136, 0.1);
   border: 1px solid #00ff88;
   color: #00ff88;
-  padding: 4px 10px;
+  padding: 6px 14px;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
+  /* Placed level with the top of the board via margin/alignment */
+  margin-bottom: 15px;
+  display: inline-block;
 }
 .upd-btn:hover {
   background: #00ff88;
@@ -671,7 +674,7 @@ footer {
   .nav-tabs { width: 100%; justify-content: center; overflow-x: auto; }
   .header-search { width: 100%; }
   
-  .hero-title { font-size: 4.5rem; }
+  .hero-title { font-size: 3.8rem; }
   
   .home-grid { grid-template-columns: 1fr; }
 
@@ -773,25 +776,27 @@ footer {
     </div>
 
     <div class="home-grid">
-      <div class="glass-panel">
-        <div class="news-header-wrapper">
-          <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
-          <span class="news-badge">LATEST UPDATES</span>
-        </div>
-        <div class="updates-scroller">
-          <div class="update-item-plain" id="upd1">
-            Update 1 - 4/8/26
+      <div>
+        <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
+        <div class="glass-panel">
+          <div class="news-header-wrapper">
+            <span class="news-badge">LATEST UPDATES</span>
           </div>
-          <div class="update-item">Summer Exclusive Pack ☀️</div>
-          <div class="update-item">Clips Page 🎬</div>
-          <div class="update-item">Feedback Page 💬</div>
-          <div class="update-item">Site Rework 🛠️</div>
-          <div class="update-item">App Version 📱</div>
-          <div class="update-item">Search Bar 🔍</div>
-          <div class="update-item">Timers ⌛</div>
-          <div class="update-item">Notifications 🔔</div>
-          <div class="update-item">Bug Fixes 🐛</div>
-          <div class="update-item">And More 📝</div>
+          <div class="updates-scroller">
+            <div class="update-item-plain" id="upd1">
+              Update 1 - 4/8/26
+            </div>
+            <div class="update-item">Summer Exclusive Pack ☀️</div>
+            <div class="update-item">Clips Page 🎬</div>
+            <div class="update-item">Feedback Page 💬</div>
+            <div class="update-item">Site Rework 🛠️</div>
+            <div class="update-item">App Version 📱</div>
+            <div class="update-item">Search Bar 🔍</div>
+            <div class="update-item">Timers ⌛</div>
+            <div class="update-item">Notifications 🔔</div>
+            <div class="update-item">Bug Fixes 🐛</div>
+            <div class="update-item">And More 📝</div>
+          </div>
         </div>
       </div>
 
