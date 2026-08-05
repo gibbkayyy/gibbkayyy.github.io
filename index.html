@@ -773,8 +773,8 @@ footer {
     </div>
 
     <div class="timer-container">
-      <div class="timer-title">Bonus Drop Timer</div>
-      <div class="timer-subtitle-note">Releasing at the same time as the Summer Pack!</div>
+      <div class="timer-title">Update 2</div>
+      <div class="timer-subtitle-note">Update 2 will release when the timer ends!</div>
       <div class="timer-digits">
         <div class="timer-block"><div class="timer-val" id="b-days">01</div><div class="timer-lbl">Days</div></div>
         <div class="timer-block"><div class="timer-val" id="b-hours">06</div><div class="timer-lbl">Hours</div></div>
@@ -1004,9 +1004,9 @@ setTimeout(() => {
   }, 45000);
 }, 6000);
 
-/* ⏱️ UNIFIED TIMER LOGIC (Summer Pack = 1d 6h; All timers synced to this new time; Edit packs timer removed completely) */
+/* ⏱️ UNIFIED TIMER LOGIC */
 const now = new Date().getTime();
-const targetTime = now + (1 * 24 * 60 * 60 * 1000) + (6 * 60 * 60 * 1000); // 1 day 6 hours from now
+const targetTime = now + (1 * 24 * 60 * 60 * 1000) + (6 * 60 * 60 * 1000);
 
 function updateAllTimers() {
   const currentTime = new Date().getTime();
@@ -1023,7 +1023,6 @@ function updateAllTimers() {
     let mStr = String(minutes).padStart(2, '0');
     let sStr = String(seconds).padStart(2, '0');
 
-    // Update Summer Pack Timer
     if(document.getElementById('v-days')) {
       document.getElementById('v-days').innerText = dStr;
       document.getElementById('v-hours').innerText = hStr;
@@ -1031,7 +1030,6 @@ function updateAllTimers() {
       document.getElementById('v-secs').innerText = sStr;
     }
 
-    // Update Bonus Drop Timer
     if(document.getElementById('b-days')) {
       document.getElementById('b-days').innerText = dStr;
       document.getElementById('b-hours').innerText = hStr;
@@ -1039,7 +1037,6 @@ function updateAllTimers() {
       document.getElementById('b-secs').innerText = sStr;
     }
 
-    // Update Tutorials Timer
     if(document.getElementById('t-days')) {
       document.getElementById('t-days').innerText = dStr;
       document.getElementById('t-hours').innerText = hStr;
@@ -1164,7 +1161,7 @@ async function submitFeedback(e) {
   submitBtn.innerText = 'Send Feedback 🚀';
 }
 
-/* STATS COUNTER ANIMATION */
+/* STATS COUNTER ANIMATION (with 1M+ and 1K+ formatting support) */
 let counted = false;
 function runStatCounter() {
   if (counted) return;
@@ -1179,7 +1176,13 @@ function runStatCounter() {
         stat.innerText = Math.floor(count).toLocaleString();
         setTimeout(updateCount, 20);
       } else {
-        stat.innerText = target.toLocaleString() + (target >= 1000000 ? 'M+' : target >= 1000 ? '+' : '');
+        if (target >= 1000000) {
+          stat.innerText = (target / 1000000) + 'M+';
+        } else if (target >= 1000) {
+          stat.innerText = (target / 1000) + 'K+';
+        } else {
+          stat.innerText = target.toLocaleString() + '+';
+        }
       }
     };
     updateCount();
@@ -1187,7 +1190,6 @@ function runStatCounter() {
   counted = true;
 }
 
-// Trigger stats counter on initial load if on home tab
 window.addEventListener('DOMContentLoaded', () => {
   runStatCounter();
 });
