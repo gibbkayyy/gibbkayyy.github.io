@@ -11,7 +11,7 @@
 </script>
 
 <meta charset="UTF-8">
-<title>Gibbkayyy</title>
+<title>Gibbkayyy - Free Editing Packs & Clips</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="manifest" href="manifest.json">
@@ -166,7 +166,6 @@ main {
   padding: 30px 20px 20px;
 }
 .hero-title {
-  /* Changed title font to a sleek, modern, bold Montserrat style */
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
   font-size: 4.5rem;
@@ -257,7 +256,7 @@ main {
 
 /* FULLY SUMMER THEMED COUNTDOWN TIMER BOX */
 .summer-timer-container {
-  background: linear-gradient(135deg, rgba(30, 20, 5, 0.9), rgba(60, 35, 10, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path d="M0 50 Q 25 30, 50 50 T 100 50" stroke="%23ffaa00" fill="none"/></svg>');
+  background: linear-gradient(135deg, rgba(30, 20, 5, 0.9), rgba(60, 35, 10, 0.9));
   border: 2px solid rgba(255, 170, 0, 0.6);
   border-radius: 16px;
   padding: 22px 25px;
@@ -346,7 +345,6 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
-  /* Shifted slightly left and down to perfectly align with the top-left edge of the glass board */
   margin-left: -4px;
   margin-bottom: 12px;
   display: inline-block;
@@ -437,7 +435,7 @@ main {
   box-shadow: 0 0 10px #00ff88;
 }
 
-/* EDITS GRID (Default Desktop: 4 items per row) */
+/* EDITS GRID */
 .edits-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -611,7 +609,7 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* NOTIFICATION POPUP (Bottom Left - Fixed completely inside screen boundary) */
+/* NOTIFICATION POPUP */
 .discord-toast {
   position: fixed;
   bottom: 25px;
@@ -663,10 +661,7 @@ footer {
   color: #fff;
 }
 
-
-/* ==========================================
-   📱 MOBILE RESPONSIVE OVERRIDES (Phones Only)
-   ========================================== */
+/* MOBILE RESPONSIVE OVERRIDES */
 @media (max-width: 768px) {
   header { 
     flex-direction: column; 
@@ -682,7 +677,6 @@ footer {
   
   .home-grid { grid-template-columns: 1fr; }
 
-  /* Scale Down Timer Container & Blocks for Mobile Only */
   .timer-container, .summer-timer-container {
     padding: 12px 15px;
     max-width: 100%;
@@ -706,7 +700,6 @@ footer {
     font-size: 0.5rem;
   }
 
-  /* Force Edits to 2 columns on mobile */
   .edits-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -772,10 +765,21 @@ footer {
       <div class="summer-timer-title">Summer Exclusive Pack</div>
       <div class="summer-timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
       <div class="timer-digits">
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">04</div><div class="summer-timer-lbl">Days</div></div>
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">00</div><div class="summer-timer-lbl">Hours</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">01</div><div class="summer-timer-lbl">Days</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">06</div><div class="summer-timer-lbl">Hours</div></div>
         <div class="summer-timer-block"><div class="summer-timer-val" id="v-mins">00</div><div class="summer-timer-lbl">Mins</div></div>
         <div class="summer-timer-block"><div class="summer-timer-val" id="v-secs">00</div><div class="summer-timer-lbl">Secs</div></div>
+      </div>
+    </div>
+
+    <div class="timer-container">
+      <div class="timer-title">Bonus Drop Timer</div>
+      <div class="timer-subtitle-note">Releasing at the same time as the Summer Pack!</div>
+      <div class="timer-digits">
+        <div class="timer-block"><div class="timer-val" id="b-days">01</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block"><div class="timer-val" id="b-hours">06</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block"><div class="timer-val" id="b-mins">00</div><div class="timer-lbl">Mins</div></div>
+        <div class="timer-block"><div class="timer-val" id="b-secs">00</div><div class="timer-lbl">Secs</div></div>
       </div>
     </div>
 
@@ -869,8 +873,8 @@ footer {
       <div class="timer-container">
         <div class="timer-title">NEW TUTORIAL WHEN TIMER HITS 0! 🔥</div>
         <div class="timer-digits">
-          <div class="timer-block"><div class="timer-val" id="t-days">05</div><div class="timer-lbl">Days</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-hours">00</div><div class="timer-lbl">Hours</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-days">01</div><div class="timer-lbl">Days</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-hours">06</div><div class="timer-lbl">Hours</div></div>
           <div class="timer-block"><div class="timer-val" id="t-mins">00</div><div class="timer-lbl">Mins</div></div>
           <div class="timer-block"><div class="timer-val" id="t-secs">00</div><div class="timer-lbl">Secs</div></div>
         </div>
@@ -892,16 +896,6 @@ footer {
     <div class="section-header">
       <h2>EDIT PACKS</h2>
       <div class="line"></div>
-    </div>
-
-    <div class="timer-container">
-      <div class="timer-title">NEW EDITING PACK WHEN TIMER HITS 0! 🔥</div>
-      <div class="timer-digits">
-        <div class="timer-block"><div class="timer-val" id="p-days">07</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block"><div class="timer-val" id="p-hours">00</div><div class="timer-lbl">Hours</div></div>
-        <div class="timer-block"><div class="timer-val" id="p-mins">00</div><div class="timer-lbl">Mins</div></div>
-        <div class="timer-block"><div class="timer-val" id="p-secs">00</div><div class="timer-lbl">Secs</div></div>
-      </div>
     </div>
 
     <div class="packs-grid">
@@ -959,7 +953,7 @@ footer {
 </main>
 
 <footer>
-  © 2026 gibbkayyy. All rights reserved.
+  © 2026 Gibbkayyy - Free Editing Packs & Clips. All rights reserved.
 </footer>
 
 <script>
@@ -1010,6 +1004,53 @@ setTimeout(() => {
   }, 45000);
 }, 6000);
 
+/* ⏱️ UNIFIED TIMER LOGIC (Summer Pack = 1d 6h; All timers synced to this new time; Edit packs timer removed completely) */
+const now = new Date().getTime();
+const targetTime = now + (1 * 24 * 60 * 60 * 1000) + (6 * 60 * 60 * 1000); // 1 day 6 hours from now
+
+function updateAllTimers() {
+  const currentTime = new Date().getTime();
+  const distance = targetTime - currentTime;
+
+  if (distance > 0) {
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    let dStr = String(days).padStart(2, '0');
+    let hStr = String(hours).padStart(2, '0');
+    let mStr = String(minutes).padStart(2, '0');
+    let sStr = String(seconds).padStart(2, '0');
+
+    // Update Summer Pack Timer
+    if(document.getElementById('v-days')) {
+      document.getElementById('v-days').innerText = dStr;
+      document.getElementById('v-hours').innerText = hStr;
+      document.getElementById('v-mins').innerText = mStr;
+      document.getElementById('v-secs').innerText = sStr;
+    }
+
+    // Update Bonus Drop Timer
+    if(document.getElementById('b-days')) {
+      document.getElementById('b-days').innerText = dStr;
+      document.getElementById('b-hours').innerText = hStr;
+      document.getElementById('b-mins').innerText = mStr;
+      document.getElementById('b-secs').innerText = sStr;
+    }
+
+    // Update Tutorials Timer
+    if(document.getElementById('t-days')) {
+      document.getElementById('t-days').innerText = dStr;
+      document.getElementById('t-hours').innerText = hStr;
+      document.getElementById('t-mins').innerText = mStr;
+      document.getElementById('t-secs').innerText = sStr;
+    }
+  }
+}
+
+setInterval(updateAllTimers, 1000);
+updateAllTimers();
 
 /* 🔄 TAB SWITCHING SYSTEM */
 function switchTab(tabId) {
@@ -1113,197 +1154,43 @@ async function submitFeedback(e) {
         successBox.style.display = 'none';
       }, 5000);
     } else {
-      alert('Oops! There was a problem submitting your feedback. Please try again.');
+      alert('Oops! There was a problem sending your feedback.');
     }
   } catch (error) {
-    alert('Network error. Please check your connection and try again.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerText = 'Send Feedback 🚀';
+    alert('Network error. Please try again later.');
   }
+
+  submitBtn.disabled = false;
+  submitBtn.innerText = 'Send Feedback 🚀';
 }
 
-/* 📊 STAT COUNTER ANIMATION */
-let ran = false;
+/* STATS COUNTER ANIMATION */
+let counted = false;
 function runStatCounter() {
-  if (ran) return;
-  ran = true;
-
-  document.querySelectorAll("[data-target]").forEach(el => {
-    let target = +el.dataset.target;
-    let current = 0;
-    let step = Math.max(Math.ceil(target / 90), 1);
-
-    let timer = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        if (target >= 1000000) {
-          el.innerText = (target / 1000000).toFixed(0) + "M+";
-        } else if (target >= 1000) {
-          el.innerText = (target / 1000).toFixed(target >= 10000 ? 0 : 1) + "K+";
-        } else {
-          el.innerText = target + "+";
-        }
-        clearInterval(timer);
+  if (counted) return;
+  const stats = document.querySelectorAll('.stat-card h3');
+  stats.forEach(stat => {
+    const target = +stat.getAttribute('data-target');
+    let count = 0;
+    const speed = target / 50;
+    const updateCount = () => {
+      count += speed;
+      if (count < target) {
+        stat.innerText = Math.floor(count).toLocaleString();
+        setTimeout(updateCount, 20);
       } else {
-        if (target >= 1000000) {
-          el.innerText = (current / 1000000).toFixed(1) + "M+";
-        } else if (target >= 1000) {
-          el.innerText = (current / 1000).toFixed(1) + "K+";
-        } else {
-          el.innerText = Math.floor(current) + "+";
-        }
+        stat.innerText = target.toLocaleString() + (target >= 1000000 ? 'M+' : target >= 1000 ? '+' : '');
       }
-    }, 20);
+    };
+    updateCount();
   });
-}
-runStatCounter();
-
-/* 🟢 MATRIX BACKGROUND EFFECT */
-const canvas = document.getElementById('matrixCanvas');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const alphabet = '010101GIBBKAYYYEDITSCODE'.split('');
-const fontSize = 16;
-let columns = canvas.width / fontSize;
-const rainDrops = Array(Math.floor(columns)).fill(1);
-
-function drawMatrix() {
-  ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#00ff88';
-  ctx.font = fontSize + 'px monospace';
-
-  for (let i = 0; i < rainDrops.length; i++) {
-    const text = alphabet[Math.floor(Math.random() * alphabet.length)];
-    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      rainDrops[i] = 0;
-    }
-    rainDrops[i]++;
-  }
-}
-setInterval(drawMatrix, 30);
-
-/* ⏱️ FIXED DATE COUNTDOWN TIMERS */
-function setupFixedTimer(targetDateString, prefix) {
-  const targetTime = new Date(targetDateString).getTime();
-
-  function update() {
-    const now = Date.now();
-    const diff = targetTime - now;
-
-    if (diff <= 0) {
-      const dElem = document.getElementById(prefix + '-days');
-      const hElem = document.getElementById(prefix + '-hours');
-      const mElem = document.getElementById(prefix + '-mins');
-      const sElem = document.getElementById(prefix + '-secs');
-      if(dElem) dElem.innerText = "00";
-      if(hElem) hElem.innerText = "00";
-      if(mElem) mElem.innerText = "00";
-      if(sElem) sElem.innerText = "00";
-      return;
-    }
-
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / 1000 / 60) % 60);
-    const s = Math.floor((diff / 1000) % 60);
-
-    const dElem = document.getElementById(prefix + '-days');
-    const hElem = document.getElementById(prefix + '-hours');
-    const mElem = document.getElementById(prefix + '-mins');
-    const sElem = document.getElementById(prefix + '-secs');
-
-    if(dElem) dElem.innerText = String(d).padStart(2, '0');
-    if(hElem) hElem.innerText = String(h).padStart(2, '0');
-    if(mElem) mElem.innerText = String(m).padStart(2, '0');
-    if(sElem) sElem.innerText = String(s).padStart(2, '0');
-  }
-
-  update();
-  setInterval(update, 1000);
+  counted = true;
 }
 
-setupFixedTimer('2026-08-11T00:00:00', 'p');
-setupFixedTimer('2026-08-09T00:00:00', 't');
-setupFixedTimer('2026-08-08T00:00:00', 'v');
-
-/* 🔊 SYNTH HOVER AUDIO EFFECT */
-let audioCtx;
-function playHoverSound() {
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
-
-    gainNode.gain.setValueAtTime(0.02, audioCtx.currentTime); 
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 0.08);
-  } catch(e) {}
-}
-
-document.querySelectorAll('.btn, .tab-btn, .edit-card, .pack-card, .stat-card').forEach(item => {
-  item.addEventListener('mouseenter', playHoverSound);
+// Trigger stats counter on initial load if on home tab
+window.addEventListener('DOMContentLoaded', () => {
+  runStatCounter();
 });
-
-/* 📲 APP INSTALL PROMPT & AUTO-HIDE WHEN INSTALLED */
-let deferredPrompt;
-const installBtn = document.getElementById('installAppBtn');
-
-const isAppMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-if (isAppMode) {
-  if (installBtn) installBtn.style.display = 'none';
-}
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-window.addEventListener('appinstalled', () => {
-  if (installBtn) installBtn.style.display = 'none';
-  deferredPrompt = null;
-});
-
-function triggerInstall() {
-  if (!deferredPrompt) {
-    alert("To install this app:\n\n• On iPhone (Safari): Tap Share -> 'Add to Home Screen'\n• On Android/Chromebook: Tap top-right 3 dots -> 'Install App'");
-    return;
-  }
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then((choiceResult) => {
-    if (choiceResult.outcome === 'accepted') {
-      if (installBtn) installBtn.style.display = 'none';
-      if (typeof gtag === 'function') {
-        gtag('event', 'app_installed', {
-          'event_category': 'PWA',
-          'event_label': 'Gibbkayyy App Installed'
-        });
-      }
-    }
-    deferredPrompt = null;
-  });
-}
 </script>
 
 </body>
