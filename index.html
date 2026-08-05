@@ -16,7 +16,7 @@
 
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/jpeg" href="thorfavicon.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka+One&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@700;800;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -166,11 +166,14 @@ main {
   padding: 30px 20px 20px;
 }
 .hero-title {
-  font-family: 'Fredoka One', cursive, sans-serif;
-  font-size: 5rem;
-  line-height: 1;
+  /* Changed title font to a sleek, modern, bold Montserrat style */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 4.5rem;
+  letter-spacing: -1px;
+  line-height: 1.1;
   color: #fff;
-  text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+  text-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
   margin-bottom: 5px;
 }
 .hero-subtitle {
@@ -343,8 +346,9 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
-  /* Placed level with the top of the board via margin/alignment */
-  margin-bottom: 15px;
+  /* Shifted slightly left and down to perfectly align with the top-left edge of the glass board */
+  margin-left: -4px;
+  margin-bottom: 12px;
   display: inline-block;
 }
 .upd-btn:hover {
@@ -674,7 +678,7 @@ footer {
   .nav-tabs { width: 100%; justify-content: center; overflow-x: auto; }
   .header-search { width: 100%; }
   
-  .hero-title { font-size: 3.8rem; }
+  .hero-title { font-size: 3.5rem; }
   
   .home-grid { grid-template-columns: 1fr; }
 
