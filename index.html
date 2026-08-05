@@ -833,7 +833,7 @@ footer {
           <p>TikTok Likes</p>
         </div>
         <div class="stat-card">
-          <h3 data-target="1000000">0</h3>
+          <h3 data-target="1000000">1M+</h3>
           <p>Most popular video</p>
         </div>
       </div>
@@ -1164,7 +1164,7 @@ async function submitFeedback(e) {
   submitBtn.innerText = 'Send Feedback 🚀';
 }
 
-/* STATS COUNTER ANIMATION (with 1+ and 1K+ formatting support) */
+/* STATS COUNTER ANIMATION */
 let counted = false;
 function runStatCounter() {
   if (counted) return;
@@ -1180,7 +1180,7 @@ function runStatCounter() {
         setTimeout(updateCount, 20);
       } else {
         if (target >= 1000000) {
-          stat.innerText = (target / 1000000) + '1+';
+          stat.innerText = '1M+';
         } else if (target >= 1000) {
           stat.innerText = (target / 1000) + 'K+';
         } else {
@@ -1196,6 +1196,23 @@ function runStatCounter() {
 window.addEventListener('DOMContentLoaded', () => {
   runStatCounter();
 });
+
+/* PWA INSTALL SYSTEM */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+});
+
+async function triggerInstall() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  } else {
+    alert("To install this app, open your browser menu (three dots or share button) and select 'Add to Home Screen' or 'Install App'.");
+  }
+}
 </script>
 
 </body>
