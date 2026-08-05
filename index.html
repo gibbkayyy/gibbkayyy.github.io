@@ -184,6 +184,7 @@ main {
 .social-actions {
   display: flex; justify-content: center; gap: 15px;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 .btn {
   padding: 12px 28px;
@@ -672,8 +673,9 @@ footer {
   .nav-container { flex-direction: column; width: 100%; gap: 10px; }
   .nav-tabs { width: 100%; justify-content: center; overflow-x: auto; }
   .header-search { width: 100%; }
-  
-  .hero-title { font-size: 3.5rem; }
+
+  .hero-title { font-size: 2.8rem; word-break: break-word; }
+  .hero-subtitle { font-size: 0.95rem; }
   
   .home-grid { grid-template-columns: 1fr; }
 
@@ -726,13 +728,13 @@ footer {
   <div class="discord-icon" id="toastIcon">💬</div>
   <div class="discord-text">
     <h4 id="toastTitle">DISCORD COMMUNITY</h4>
-    <p id="toastDesc">New Discord Community Coming Soon!</p>
+    <p id="toastDesc">Want to chat? Join the discord server!</p>
   </div>
   <button class="discord-close" onclick="closeDiscordToast()">✕</button>
 </div>
 
 <header>
-  <div class="brand">GIBBKAYYY</div>
+  <div class="brand" id="headerBrand">GIBBKAYYY</div>
   <div class="nav-container">
     <nav class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('home')">Home</button>
@@ -753,11 +755,12 @@ footer {
 
   <section id="home" class="page-tab active-page">
     <div class="hero-content">
-      <h1 class="hero-title">GIBBKAYYY</h1>
+      <h1 class="hero-title" id="heroMainTitle">GIBBKAYYY</h1>
       <p class="hero-subtitle">Made To Be Watched</p>
       <div class="social-actions">
         <a class="btn" href="https://www.youtube.com/@gibbkayyy" target="_blank">YouTube Channel</a>
         <a class="btn" href="https://www.tiktok.com/@gibbkayyy" target="_blank">TikTok Account</a>
+        <a class="btn" href="https://discord.gg/n7y2jgP8" target="_blank">Discord Server</a>
       </div>
     </div>
 
@@ -923,7 +926,7 @@ footer {
 
     <div class="glass-panel coming-soon-container">
       <h3 class="coming-soon-title">COMING SOON 🔥</h3>
-      <p class="coming-soon-sub">If you want any specific clips, ask in the feedback page!</p>
+      <p class="coming-soon-sub">If you want any specific clips, ask in the feedback page or discord server!</p>
     </div>
   </section>
 
@@ -959,8 +962,8 @@ footer {
 <script>
 /* 💬 ROTATING NOTIFICATION TOAST SYSTEM */
 const notifications = [
-  { icon: '💬', title: 'DISCORD COMMUNITY', desc: 'New Discord Community Coming Soon!' },
-  { icon: '💡', title: 'HAVE ANY IDEAS?', desc: 'Leave some feedback on the feedback page!' },
+  { icon: '💬', title: 'DISCORD COMMUNITY', desc: 'Want to chat? Join the discord server!' },
+  { icon: '💡', title: 'HAVE ANY IDEAS?', desc: 'Have any ideas? Leave feedback on the feedback page or on the Discord server!' },
   { icon: '📲', title: 'INSTALL APP', desc: 'Want to access the site easier? Install the app for free!' }
 ];
 
@@ -1161,7 +1164,7 @@ async function submitFeedback(e) {
   submitBtn.innerText = 'Send Feedback 🚀';
 }
 
-/* STATS COUNTER ANIMATION (with 1M+ and 1K+ formatting support) */
+/* STATS COUNTER ANIMATION (with 1+ and 1K+ formatting support) */
 let counted = false;
 function runStatCounter() {
   if (counted) return;
@@ -1177,7 +1180,7 @@ function runStatCounter() {
         setTimeout(updateCount, 20);
       } else {
         if (target >= 1000000) {
-          stat.innerText = (target / 1000000) + 'M+';
+          stat.innerText = (target / 1000000) + '1+';
         } else if (target >= 1000) {
           stat.innerText = (target / 1000) + 'K+';
         } else {
