@@ -742,8 +742,8 @@ footer {
       <div class="summer-timer-title">Summer Exclusive Pack</div>
       <div class="summer-timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
       <div class="timer-digits">
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">01</div><div class="summer-timer-lbl">Days</div></div>
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">06</div><div class="summer-timer-lbl">Hours</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">00</div><div class="summer-timer-lbl">Days</div></div>
+        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">00</div><div class="summer-timer-lbl">Hours</div></div>
         <div class="summer-timer-block"><div class="summer-timer-val" id="v-mins">00</div><div class="summer-timer-lbl">Mins</div></div>
         <div class="summer-timer-block"><div class="summer-timer-val" id="v-secs">00</div><div class="summer-timer-lbl">Secs</div></div>
       </div>
@@ -753,8 +753,8 @@ footer {
       <div class="timer-title">Update 2</div>
       <div class="timer-subtitle-note">Update 2 will release when the timer ends!</div>
       <div class="timer-digits">
-        <div class="timer-block"><div class="timer-val" id="b-days">01</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block"><div class="timer-val" id="b-hours">06</div><div class="timer-lbl">Hours</div></div>
+        <div class="timer-block"><div class="timer-val" id="b-days">00</div><div class="timer-lbl">Days</div></div>
+        <div class="timer-block"><div class="timer-val" id="b-hours">00</div><div class="timer-lbl">Hours</div></div>
         <div class="timer-block"><div class="timer-val" id="b-mins">00</div><div class="timer-lbl">Mins</div></div>
         <div class="timer-block"><div class="timer-val" id="b-secs">00</div><div class="timer-lbl">Secs</div></div>
       </div>
@@ -850,8 +850,8 @@ footer {
       <div class="timer-container">
         <div class="timer-title">NEW TUTORIAL WHEN TIMER HITS 0! 🔥</div>
         <div class="timer-digits">
-          <div class="timer-block"><div class="timer-val" id="t-days">01</div><div class="timer-lbl">Days</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-hours">06</div><div class="timer-lbl">Hours</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-days">00</div><div class="timer-lbl">Days</div></div>
+          <div class="timer-block"><div class="timer-val" id="t-hours">00</div><div class="timer-lbl">Hours</div></div>
           <div class="timer-block"><div class="timer-val" id="t-mins">00</div><div class="timer-lbl">Mins</div></div>
           <div class="timer-block"><div class="timer-val" id="t-secs">00</div><div class="timer-lbl">Secs</div></div>
         </div>
@@ -973,8 +973,8 @@ setTimeout(() => {
   setInterval(() => { showDiscordToast(); }, 45000);
 }, 6000);
 
-const now = new Date().getTime();
-const targetTime = now + (1 * 24 * 60 * 60 * 1000) + (6 * 60 * 60 * 1000);
+/* FIXED TARGET DATE: August 6, 2026 at 17:00 (5:00 PM) */
+const targetTime = new Date('August 6, 2026 17:00:00').getTime();
 
 function updateAllTimers() {
   const currentTime = new Date().getTime();
@@ -997,6 +997,15 @@ function updateAllTimers() {
         document.getElementById(prefix + 'hours').innerText = hStr;
         document.getElementById(prefix + 'mins').innerText = mStr;
         document.getElementById(prefix + 'secs').innerText = sStr;
+      }
+    });
+  } else {
+    ['v-', 'b-', 't-'].forEach(prefix => {
+      if(document.getElementById(prefix + 'days')) {
+        document.getElementById(prefix + 'days').innerText = '00';
+        document.getElementById(prefix + 'hours').innerText = '00';
+        document.getElementById(prefix + 'mins').innerText = '00';
+        document.getElementById(prefix + 'secs').innerText = '00';
       }
     });
   }
