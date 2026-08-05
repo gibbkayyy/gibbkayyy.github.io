@@ -343,6 +343,7 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
+  margin-bottom: 15px;
 }
 .upd-btn:hover {
   background: #00ff88;
@@ -380,6 +381,7 @@ main {
   font-size: 0.9rem;
   color: #ccc;
   display: block;
+  scroll-margin-top: 10px;
 }
 .update-desc {
   font-size: 0.8rem;
@@ -781,14 +783,14 @@ footer {
       <div class="glass-panel">
         <div class="news-header-row">
           <span class="news-badge">LATEST UPDATES</span>
-          <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
         </div>
+        <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
         <div class="updates-scroller">
-          <div class="update-item-plain">
-            Update - 4/8/26
+          <div class="update-item-plain" id="upd1">
+            Update 1 - 4/8/26
             <div class="update-desc" id="platformUpdateNotice">The Site will keep updating for another 24 hours. After that, there will be a timer for a new update.</div>
           </div>
-          <div class="update-item" id="upd1">Summer Exclusive Pack ☀️</div>
+          <div class="update-item">Summer Exclusive Pack ☀️</div>
           <div class="update-item">Clips Page 🎬</div>
           <div class="update-item">Feedback Page 💬</div>
           <div class="update-item">Site Rework 🛠️</div>
