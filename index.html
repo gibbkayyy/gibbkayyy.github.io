@@ -209,86 +209,6 @@ main {
   transform: translateY(-2px);
 }
 
-/* COUNTDOWN TIMER BOXES */
-.timer-container, .summer-timer-container {
-  border-radius: 16px;
-  padding: 20px 20px;
-  margin: 0 auto 25px;
-  max-width: 550px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-}
-.timer-container {
-  background: rgba(15, 15, 15, 0.7);
-  border: 1px solid rgba(0, 255, 136, 0.3);
-  box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
-}
-.summer-timer-container {
-  background: linear-gradient(135deg, rgba(30, 20, 5, 0.9), rgba(60, 35, 10, 0.9));
-  border: 2px solid rgba(255, 170, 0, 0.6);
-  box-shadow: 0 0 35px rgba(255, 150, 0, 0.3), inset 0 0 20px rgba(255, 200, 0, 0.15);
-}
-.timer-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem;
-  color: #00ff88;
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
-}
-.summer-timer-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
-  color: #ffaa00;
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-  text-shadow: 0 0 15px rgba(255, 170, 0, 0.7);
-}
-.timer-subtitle-note, .summer-timer-subtitle-note {
-  font-size: 0.75rem;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
-}
-.timer-subtitle-note { color: #aaa; }
-.summer-timer-subtitle-note { color: #ffdf80; }
-
-.timer-digits {
-  display: flex; justify-content: center; gap: 10px;
-}
-.timer-block, .summer-timer-block {
-  border-radius: 10px;
-  padding: 8px 12px;
-  min-width: 60px;
-}
-.timer-block {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 255, 136, 0.2);
-}
-.summer-timer-block {
-  background: rgba(20, 10, 0, 0.75);
-  border: 1px solid rgba(255, 170, 0, 0.4);
-}
-.timer-val, .summer-timer-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
-  color: #fff;
-  line-height: 1;
-}
-.timer-lbl {
-  font-size: 0.6rem;
-  color: #888;
-  text-transform: uppercase;
-  margin-top: 4px;
-  letter-spacing: 1px;
-}
-.summer-timer-lbl {
-  font-size: 0.6rem;
-  color: #ffbb44;
-  text-transform: uppercase;
-  margin-top: 4px;
-  letter-spacing: 1px;
-}
-
 /* HOME SIDE-BY-SIDE GRID */
 .home-grid {
   display: grid;
@@ -322,6 +242,11 @@ main {
   font-weight: 800;
   letter-spacing: 1px;
 }
+.upd-btns-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
 .upd-btn {
   background: rgba(0, 255, 136, 0.1);
   border: 1px solid #00ff88;
@@ -332,10 +257,9 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
-  margin-bottom: 12px;
   display: inline-block;
 }
-.upd-btn:hover {
+.upd-btn:hover, .upd-btn.active-upd {
   background: #00ff88;
   color: #000;
   box-shadow: 0 0 10px #00ff88;
@@ -350,6 +274,14 @@ main {
   flex-direction: column;
   gap: 10px;
 }
+.update-board {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+.update-board.active-board {
+  display: flex;
+}
 .update-item {
   padding: 10px 14px;
   background: rgba(255, 255, 255, 0.02);
@@ -358,9 +290,6 @@ main {
   font-size: 0.9rem;
   color: #ccc;
   transition: background 0.3s;
-}
-.update-item.highlighted {
-  background: rgba(0, 255, 136, 0.15);
 }
 .update-item-plain {
   padding: 10px 14px;
@@ -460,6 +389,9 @@ main {
 .tutorials-container {
   max-width: 650px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .video-wrapper {
   position: relative;
@@ -662,22 +594,6 @@ footer {
   
   .home-grid { grid-template-columns: 1fr; }
 
-  .timer-container, .summer-timer-container {
-    padding: 14px 12px;
-    max-width: 100%;
-    margin-bottom: 18px;
-  }
-  .timer-title, .summer-timer-title {
-    font-size: 1.2rem;
-  }
-  .timer-digits { gap: 6px; }
-  .timer-block, .summer-timer-block {
-    padding: 6px 8px;
-    min-width: 44px;
-  }
-  .timer-val, .summer-timer-val { font-size: 1.3rem; }
-  .timer-lbl, .summer-timer-lbl { font-size: 0.5rem; }
-
   .edits-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -738,36 +654,27 @@ footer {
       </div>
     </div>
 
-    <div class="summer-timer-container">
-      <div class="summer-timer-title">Summer Exclusive Pack</div>
-      <div class="summer-timer-subtitle-note">Releasing for a limited time when the timer hits 0!</div>
-      <div class="timer-digits">
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-days">00</div><div class="summer-timer-lbl">Days</div></div>
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-hours">00</div><div class="summer-timer-lbl">Hours</div></div>
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-mins">00</div><div class="summer-timer-lbl">Mins</div></div>
-        <div class="summer-timer-block"><div class="summer-timer-val" id="v-secs">00</div><div class="summer-timer-lbl">Secs</div></div>
-      </div>
-    </div>
-
-    <div class="timer-container">
-      <div class="timer-title">Update 2</div>
-      <div class="timer-subtitle-note">Update 2 will release when the timer ends!</div>
-      <div class="timer-digits">
-        <div class="timer-block"><div class="timer-val" id="b-days">00</div><div class="timer-lbl">Days</div></div>
-        <div class="timer-block"><div class="timer-val" id="b-hours">00</div><div class="timer-lbl">Hours</div></div>
-        <div class="timer-block"><div class="timer-val" id="b-mins">00</div><div class="timer-lbl">Mins</div></div>
-        <div class="timer-block"><div class="timer-val" id="b-secs">00</div><div class="timer-lbl">Secs</div></div>
-      </div>
-    </div>
-
     <div class="home-grid">
       <div>
-        <button class="upd-btn" onclick="scrollToUpdate('upd1')">Upd.1</button>
+        <div class="upd-btns-row">
+          <button class="upd-btn active-upd" id="btnUpd2" onclick="switchUpdateBoard('upd2')">Update 2</button>
+          <button class="upd-btn" id="btnUpd1" onclick="switchUpdateBoard('upd1')">Upd.1</button>
+        </div>
         <div class="glass-panel">
           <div class="news-header-wrapper">
             <span class="news-badge">LATEST UPDATES</span>
           </div>
-          <div class="updates-scroller">
+
+          <!-- Update 2 Board (Default) -->
+          <div class="update-board active-board" id="boardUpd2">
+            <div class="update-item-plain">Update 2 - 6/8/26</div>
+            <div class="update-item">New limited-time editing pack! 🎁</div>
+            <div class="update-item">New Watermark Tutorial 🎬</div>
+            <div class="update-item">Discord Server 💬</div>
+          </div>
+
+          <!-- Update 1 Board (Kept exact same) -->
+          <div class="update-board" id="boardUpd1">
             <div class="update-item-plain" id="upd1">
               Update 1 - 4/8/26
             </div>
@@ -847,16 +754,18 @@ footer {
     </div>
 
     <div class="tutorials-container">
-      <div class="timer-container">
-        <div class="timer-title">NEW TUTORIAL WHEN TIMER HITS 0! 🔥</div>
-        <div class="timer-digits">
-          <div class="timer-block"><div class="timer-val" id="t-days">00</div><div class="timer-lbl">Days</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-hours">00</div><div class="timer-lbl">Hours</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-mins">00</div><div class="timer-lbl">Mins</div></div>
-          <div class="timer-block"><div class="timer-val" id="t-secs">00</div><div class="timer-lbl">Secs</div></div>
+      <!-- New Watermark Tutorial -->
+      <div class="glass-panel" style="padding:20px;">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/9hNb_bfWwaw" title="How to make a TRANSPARENT WATERMARK FOR FREE in CAPCUT!" allowfullscreen></iframe>
+        </div>
+        <div class="tutorial-info">
+          <h3>How to make a TRANSPARENT WATERMARK FOR FREE in CAPCUT!</h3>
+          <p>Long-form Editing Guide</p>
         </div>
       </div>
 
+      <!-- Previous Tutorial -->
       <div class="glass-panel" style="padding:20px;">
         <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/AEVSBnBFzYw" title="How to Make AE-LIKE text in CAPCUT!" allowfullscreen></iframe>
@@ -883,11 +792,11 @@ footer {
         <a class="btn" href="greenscreenpack.zip" download>Download Pack</a>
       </div>
 
-      <div class="pack-card disabled">
-        <h3>Overlay Pack</h3>
-        <p>Free overlays to improve edits</p>
-        <div class="pack-size">File Size: SOON</div>
-        <a class="btn" style="pointer-events:none; opacity:0.6;">Releasing when the timer ends!</a>
+      <div class="pack-card">
+        <h3>Summer Exclusive Pack</h3>
+        <p>Exclusive limited-time SFX editing sound pack.</p>
+        <div class="pack-size">File Size: 194KB</div>
+        <a class="btn" href="sfx.zip" download>Download Pack</a>
       </div>
     </div>
   </section>
@@ -973,46 +882,18 @@ setTimeout(() => {
   setInterval(() => { showDiscordToast(); }, 45000);
 }, 6000);
 
-/* FIXED TARGET DATE: August 6, 2026 at 17:00 (5:00 PM) */
-const targetTime = new Date('August 6, 2026 17:00:00').getTime();
+function switchUpdateBoard(boardName) {
+  document.querySelectorAll('.update-board').forEach(b => b.classList.remove('active-board'));
+  document.querySelectorAll('.upd-btn').forEach(btn => btn.classList.remove('active-upd'));
 
-function updateAllTimers() {
-  const currentTime = new Date().getTime();
-  const distance = targetTime - currentTime;
-
-  if (distance > 0) {
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    let dStr = String(days).padStart(2, '0');
-    let hStr = String(hours).padStart(2, '0');
-    let mStr = String(minutes).padStart(2, '0');
-    let sStr = String(seconds).padStart(2, '0');
-
-    ['v-', 'b-', 't-'].forEach(prefix => {
-      if(document.getElementById(prefix + 'days')) {
-        document.getElementById(prefix + 'days').innerText = dStr;
-        document.getElementById(prefix + 'hours').innerText = hStr;
-        document.getElementById(prefix + 'mins').innerText = mStr;
-        document.getElementById(prefix + 'secs').innerText = sStr;
-      }
-    });
+  if (boardName === 'upd2') {
+    document.getElementById('boardUpd2').classList.add('active-board');
+    document.getElementById('btnUpd2').classList.add('active-upd');
   } else {
-    ['v-', 'b-', 't-'].forEach(prefix => {
-      if(document.getElementById(prefix + 'days')) {
-        document.getElementById(prefix + 'days').innerText = '00';
-        document.getElementById(prefix + 'hours').innerText = '00';
-        document.getElementById(prefix + 'mins').innerText = '00';
-        document.getElementById(prefix + 'secs').innerText = '00';
-      }
-    });
+    document.getElementById('boardUpd1').classList.add('active-board');
+    document.getElementById('btnUpd1').classList.add('active-upd');
   }
 }
-
-setInterval(updateAllTimers, 1000);
-updateAllTimers();
 
 function switchTab(tabId) {
   document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active-page'));
@@ -1028,20 +909,6 @@ function switchTab(tabId) {
 
   if (tabId === 'home') { runStatCounter(); }
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function scrollToUpdate(updateId) {
-  const targetItem = document.getElementById(updateId);
-  const scroller = targetItem ? targetItem.closest('.updates-scroller') : null;
-  
-  if (targetItem && scroller) {
-    scroller.scrollTo({
-      top: targetItem.offsetTop - scroller.offsetTop,
-      behavior: 'smooth'
-    });
-    targetItem.classList.add('highlighted');
-    setTimeout(() => { targetItem.classList.remove('highlighted'); }, 1500);
-  }
 }
 
 function handleSearch(event) {
