@@ -1,0 +1,184 @@
+name: Fix KORA camera
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch-camera:
+    if: ${{ !contains(github.event.head_commit.message, 'fix: KORA camera implementation') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Patch camera implementation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          new_open = r'''async function openCamera() {
+
+if (
+!navigator.mediaDevices ||
+!navigator.mediaDevices.getUserMedia
+) {
+
+transmission.textContent =
+  "Camera access isn't available in this browser, Sir.";
+
+speak(
+  "Camera access isn't available in this browser, Sir."
+);
+
+return;
+}
+
+try {
+
+stopListening();
+
+/* Stop an old stream before requesting a new one. */
+if (cameraStream) {
+  cameraStream.getTracks().forEach(track => track.stop());
+  cameraStream = null;
+}
+
+transmission.textContent =
+  "Requesting camera access, Sir...";
+
+setState(
+  "THINKING",
+  "Requesting camera access"
+);
+
+cameraStream =
+  await navigator.mediaDevices.getUserMedia({
+    video: {
+      facingMode: { ideal: "environment" },
+      width: { ideal: 1280 },
+      height: { ideal: 720 }
+    },
+    audio: false
+  });
+
+cameraVideo.srcObject = cameraStream;
+
+/* Some browsers do not begin playback automatically after srcObject. */
+try {
+  await cameraVideo.play();
+} catch (playError) {
+  console.warn("KORA camera video.play() was blocked:", playError);
+}
+
+core.classList.add("camera-mode");
+cameraPanel.classList.add("visible");
+
+setState(
+  "VISION ACTIVE",
+  "Kora can see through the camera"
+);
+
+transmission.textContent =
+  "Camera active, Sir. Ask me what you'd like me to identify.";
+
+speakWithoutConfirmation(
+  "Camera active, Sir. What would you like me to look at?"
+);
+
+} catch (error) {
+
+console.error("KORA camera error:", error);
+
+if (cameraStream) {
+  cameraStream.getTracks().forEach(track => track.stop());
+  cameraStream = null;
+}
+
+cameraVideo.srcObject = null;
+cameraPanel.classList.remove("visible");
+core.classList.remove("camera-mode");
+
+let message =
+  "I couldn't access the camera, Sir.";
+
+if (error && error.name === "NotAllowedError") {
+  message =
+    "Camera permission was denied, Sir. Please allow camera access for Kora and try again.";
+} else if (error && error.name === "NotFoundError") {
+  message =
+    "I couldn't find a camera on this device, Sir.";
+} else if (error && error.name === "NotReadableError") {
+  message =
+    "The camera is already being used by another app, Sir.";
+} else if (error && error.name === "SecurityError") {
+  message =
+    "The browser blocked camera access for security reasons, Sir.";
+}
+
+transmission.textContent = message;
+setState("LISTENING", "Kora is listening");
+speak(message);
+
+}
+}
+
+'''
+
+new_close = r'''function closeCamera() {
+
+if (cameraStream) {
+  cameraStream.getTracks().forEach(track => track.stop());
+  cameraStream = null;
+}
+
+cameraVideo.pause();
+cameraVideo.srcObject = null;
+cameraPanel.classList.remove("visible");
+
+setTimeout(() => {
+  core.classList.remove("camera-mode");
+}, 300);
+
+setState(
+  "LISTENING",
+  "Kora is listening"
+);
+
+transmission.textContent =
+  "Camera closed, Sir.";
+
+restartListening();
+}
+
+'''
+
+pattern = re.compile(
+    r'async function openCamera\(\) \{.*?\nfunction closeCamera\(\) \{.*?\n\}\n\n',
+    re.S
+)
+
+match = pattern.search(text)
+if not match:
+    raise SystemExit('Could not find the existing KORA camera functions; refusing to modify index.html.')
+
+text = text[:match.start()] + new_open + new_close + text[match.end():]
+path.write_text(text, encoding='utf-8')
+PY
+
+      - name: Commit camera fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "fix: KORA camera implementation"
+          git push
