@@ -1,0 +1,217 @@
+name: Fix KORA camera
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch-camera:
+    if: "!contains(github.event.head_commit.message, '[camera-fix]')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Patch camera implementation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          replacement = r'''/* =====================================================
+   CAMERA
+===================================================== */
+
+async function openCamera() {
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    transmission.textContent =
+      "Camera access isn't available in this browser, Sir.";
+    speak("Camera access isn't available in this browser, Sir.");
+    return;
+  }
+
+  if (cameraStream && cameraStream.active) {
+    cameraPanel.classList.add("visible");
+    core.classList.add("camera-mode");
+    setState("VISION ACTIVE", "Kora can see through the camera");
+    transmission.textContent =
+      "Camera is already active, Sir. Ask me what you'd like me to identify.";
+    return;
+  }
+
+  try {
+    stopListening();
+    processing = true;
+    setState("THINKING", "Requesting camera access");
+    micState.textContent = "CAMERA ACCESS REQUESTED";
+
+    // Prefer the rear camera on phones, but gracefully fall back to
+    // the normal/default camera on laptops and devices without one.
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { exact: "environment" },
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      });
+    } catch (rearCameraError) {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        },
+        audio: false
+      });
+    }
+
+    cameraStream = stream;
+
+    cameraVideo.muted = true;
+    cameraVideo.autoplay = true;
+    cameraVideo.playsInline = true;
+    cameraVideo.setAttribute("playsinline", "");
+    cameraVideo.setAttribute("autoplay", "");
+    cameraVideo.srcObject = stream;
+
+    // Wait until the browser has attached the video track before trying
+    // to play it. This fixes the common black/blank camera panel issue.
+    if (cameraVideo.readyState < HTMLMediaElement.HAVE_METADATA) {
+      await new Promise((resolve, reject) => {
+        const timeout = setTimeout(
+          () => reject(new Error("Camera video timed out")),
+          8000
+        );
+
+        const onLoaded = () => {
+          clearTimeout(timeout);
+          cameraVideo.removeEventListener("loadedmetadata", onLoaded);
+          resolve();
+        };
+
+        cameraVideo.addEventListener("loadedmetadata", onLoaded, { once: true });
+      });
+    }
+
+    try {
+      await cameraVideo.play();
+    } catch (playError) {
+      // Some browsers delay autoplay until the media element is visible.
+      // The stream is still valid, so retry on the next frame.
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      await cameraVideo.play();
+    }
+
+    core.classList.add("camera-mode");
+    cameraPanel.classList.add("visible");
+
+    processing = false;
+    setState("VISION ACTIVE", "Kora can see through the camera");
+    micState.textContent = "CAMERA ACTIVE";
+    transmission.textContent =
+      "Camera active, Sir. Ask me what you'd like me to identify.";
+
+    speakWithoutConfirmation(
+      "Camera active, Sir. What would you like me to look at?"
+    );
+
+  } catch (error) {
+    processing = false;
+
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+    }
+
+    cameraVideo.srcObject = null;
+    cameraPanel.classList.remove("visible");
+    core.classList.remove("camera-mode");
+
+    let message = "I couldn't access the camera, Sir.";
+
+    if (error && error.name === "NotAllowedError") {
+      message =
+        "Camera permission was denied, Sir. Please allow camera access in your browser settings.";
+    } else if (error && error.name === "NotFoundError") {
+      message = "I couldn't find a camera on this device, Sir.";
+    } else if (error && error.name === "NotReadableError") {
+      message =
+        "The camera is already being used by another app, Sir.";
+    } else if (error && error.name === "SecurityError") {
+      message =
+        "The browser blocked camera access for security reasons, Sir.";
+    }
+
+    transmission.textContent = message;
+    setState("LISTENING", "Kora is listening");
+    speak(message);
+  }
+}
+
+
+function closeCamera() {
+
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
+  }
+
+  cameraVideo.pause();
+  cameraVideo.srcObject = null;
+  cameraPanel.classList.remove("visible");
+
+  setTimeout(() => {
+    core.classList.remove("camera-mode");
+  }, 300);
+
+  processing = false;
+  micState.textContent = "MICROPHONE ACTIVE";
+  setState("LISTENING", "Kora is listening");
+  transmission.textContent = "Camera closed, Sir.";
+  restartListening();
+}
+
+
+cameraClose.addEventListener(
+  "click",
+  closeCamera
+);
+'''
+
+          pattern = re.compile(
+              r'/\* =====================================================\n   CAMERA\n===================================================== \*/\n\nasync function openCamera\(\).*?\n\n\n/\* =====================================================\n   CAMERA ANALYSIS',
+              re.S,
+          )
+
+          match = pattern.search(text)
+          if not match:
+              raise SystemExit('Camera block not found; refusing to modify index.html')
+
+          new_text = text[:match.start()] + replacement + '\n\n/* =====================================================\n   CAMERA ANALYSIS' + text[match.end():]
+
+          path.write_text(new_text, encoding='utf-8')
+          print('Camera implementation patched successfully.')
+          PY
+
+      - name: Commit patched index.html and remove temporary workflow
+        run: |
+          rm -f .github/workflows/fix-camera.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/fix-camera.yml
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "fix: repair KORA camera [camera-fix]"
+          git push
